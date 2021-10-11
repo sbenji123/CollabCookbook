@@ -1,0 +1,24 @@
+{
+  "name": "collabcookbook",
+  "version": "1.0.0",
+  "description": "Full Collaborative Cookbook project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbenji123/CollabCookbook.git"
+  },
+  "author": "Samuel Benjamin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sbenji123/CollabCookbook/issues"
+  },
+  "homepage": "https://github.com/sbenji123/CollabCookbook#readme",
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "nodemon": "^2.0.13"
+  }
+}

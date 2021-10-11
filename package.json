@@ -20,5 +20,12 @@
   "devDependencies": {
     "concurrently": "^6.3.0",
     "nodemon": "^2.0.13"
+  },
+  "dependencies": {
+    "axios": "^0.22.0",
+    "formik": "^2.2.9",
+    "package.json": "^2.0.1",
+    "reactstrap": "^8.10.0",
+    "redux": "^4.1.1"
   }
 }

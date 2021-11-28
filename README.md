@@ -4,7 +4,7 @@
 1. [Installation](#installation) 
 2. [Usage](#usage)
 3. [Resources](#resources)
-4. [Create React App Resource](#create-react-app)
+4. [Getting Started With Create React App](#getting-started-with-create-react-app)
 ------------------------------------------------------------------------ 
 ### Installation 
 ------------------------------------------------------------------------ 
@@ -15,9 +15,12 @@
 - [Create React App](https://github.com/facebook/create-react-app)
 - [Project in Google Drive](https://drive.google.com/drive/folders/10LV4klgTZ_37B-L8DIvACqF4dt4AIQba?usp=sharing)
 - Using Firebase as BaaS with Cloud Firestore and Hosting - Hosting at:
+- Tutorial Helper
+  - [Youtube](https://www.youtube.com/playlist?list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3)
+  - [Github Repo](https://github.com/iamshaunjp/React-Redux-Firebase-App)
 
 
-# Create React App
+# Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

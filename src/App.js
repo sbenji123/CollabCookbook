@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Dashboard from './components/Dashboard';
+import RecipeDetails from './components/recipe/RecipeDetails';
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
+import CreateRecipe from './components/recipe/CreateRecipe';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render(){
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Navbar/>
+          <Routes>
+            <Route path='/' element={<Dashboard/>}/>
+            <Route path='/recipe/:id' element={<RecipeDetails/>} />
+            <Route path='/signin' element={<SignIn />} />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/create-recipe' element={<CreateRecipe />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

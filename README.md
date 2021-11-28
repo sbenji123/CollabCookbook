@@ -1,4 +1,23 @@
-# Getting Started with Create React App
+# CollabCookbook 
+### Description 
+### Table of Contents 
+1. [Installation](#installation) 
+2. [Usage](#usage)
+3. [Resources](#resources)
+4. [Create React App Resource](#create-react-app)
+------------------------------------------------------------------------ 
+### Installation 
+------------------------------------------------------------------------ 
+### Usage 
+
+------------------------------------------------------------------------ 
+### Resources
+- [Create React App](https://github.com/facebook/create-react-app)
+- [Project in Google Drive](https://drive.google.com/drive/folders/10LV4klgTZ_37B-L8DIvACqF4dt4AIQba?usp=sharing)
+- Using Firebase as BaaS with Cloud Firestore and Hosting - Hosting at:
+
+
+# Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -6,6 +6,7 @@ import ShowRecipePage from './components/recipe/ShowRecipePage';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import CreateRecipe from './components/recipe/CreateRecipe';
+import EditRecipe from './components/recipe/EditRecipe';
 
 class App extends Component {
   render(){
@@ -16,9 +17,11 @@ class App extends Component {
           <Routes>
             <Route path='/' element={<Dashboard/>}/>
             <Route path='/recipe/:id' element={<ShowRecipePage/>} />
+            <Route path='/recipe/:id/edit' element={<EditRecipe />} />
+            <Route path='/recipe/create' element={<CreateRecipe />} />
             <Route path='/signin' element={<SignIn />} />
             <Route path='/signup' element={<SignUp />} />
-            <Route path='/create-recipe' element={<CreateRecipe />} />
+            
           </Routes>
         </div>
       </BrowserRouter>

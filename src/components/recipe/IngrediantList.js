@@ -1,7 +1,6 @@
 import React from 'react'
 
 const IngrediantList = ({ingrediants}) => {
-    console.log(ingrediants)
     return (
         <div className="card-content">
             <span className="card-title">Ingrediants</span>       

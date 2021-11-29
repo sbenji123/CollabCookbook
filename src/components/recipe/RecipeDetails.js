@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router';
 import IngrediantList from './IngrediantList'
 import DirectionList from './DirectionList';
+import { Link } from 'react-router-dom'
 
 const RecipeDetails = ({recipe}) => {
     console.log(recipe)
@@ -20,9 +21,11 @@ const RecipeDetails = ({recipe}) => {
             <div className="card">
                 <IngrediantList ingrediants={recipe.ingrediants} />
                 <DirectionList directions={recipe.directions} />
-                <a class="btn-floating halfway-fab waves-effect waves-light red">
-                    <i class="material-icons">edit</i>
-                </a>
+                <Link to={'/recipe/'+id+'/edit'} >
+                    <button className="btn-floating halfway-fab waves-effect waves-light red">
+                        <i className="material-icons">edit</i>
+                    </button>
+                </Link>
             </div>
         </div>
     )

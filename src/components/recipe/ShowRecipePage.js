@@ -14,7 +14,7 @@ export class ShowRecipePage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        recipe: state.recipes.recipes[0]
+        recipe: state.recipe.recipe
     }
 }
 

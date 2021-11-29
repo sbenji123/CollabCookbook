@@ -16,7 +16,7 @@ class Dashboard extends Component {
                     </div>
                     <div className="col s12 m6">
                         {/* Recipe List */}
-                        <RecipeList recipes={recipes}/>
+                        {/* <RecipeList recipes={recipes}/> */}
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        recipes: state.recipes.recipes
+        recipes: state.recipe.recipe
     }
 }
 

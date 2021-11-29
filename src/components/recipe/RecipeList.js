@@ -1,14 +1,14 @@
 import React from 'react';
 import RecipeSummary from './RecipeSummary'
 
-const RecipeList = () => {
+const RecipeList = ({recipes}) => {
     return (
         <div className="recipe-list section">
-
-            <RecipeSummary />
-            <RecipeSummary />
-            <RecipeSummary />
-
+            { recipes && recipes.map(recipe => {
+              return (
+                <RecipeSummary recipe={recipe} key={recipe.id}/>
+              )
+            })}
         </div>
     )
 }

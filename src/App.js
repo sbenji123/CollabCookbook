@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/Dashboard';
-import RecipeDetails from './components/recipe/RecipeDetails';
+import ShowRecipePage from './components/recipe/ShowRecipePage';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import CreateRecipe from './components/recipe/CreateRecipe';
@@ -15,7 +15,7 @@ class App extends Component {
           <Navbar/>
           <Routes>
             <Route path='/' element={<Dashboard/>}/>
-            <Route path='/recipe/:id' element={<RecipeDetails/>} />
+            <Route path='/recipe/:id' element={<ShowRecipePage/>} />
             <Route path='/signin' element={<SignIn />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/create-recipe' element={<CreateRecipe />} />

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import RecipeList from './recipe/RecipeList'
 import CookbookList from './cookbook/CookbookList'
+import { connect } from 'react-redux';
 
 class Dashboard extends Component {
     render(){
+        // console.log(this.props)
+        const { recipes } = this.props;
         return(
             <div className="dashboard container">
                 <div className="row">
@@ -13,7 +16,7 @@ class Dashboard extends Component {
                     </div>
                     <div className="col s12 m6">
                         {/* Recipe List */}
-                        <RecipeList />
+                        <RecipeList recipes={recipes}/>
                     </div>
                 </div>
             </div>
@@ -21,4 +24,10 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {
+        recipes: state.recipes.recipes
+    }
+}
+
+export default connect(mapStateToProps)(Dashboard);

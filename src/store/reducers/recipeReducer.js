@@ -12,7 +12,7 @@ const initState = {
                     "Take off the stove and add the beaten egg and vanilla.",
                     "Return to the stove and cook slowly for 5 minutes. Add the Rice Krispies, mix well and remove from heat.",
                     "Cool mixture slightly.  Roll small balls of the mixture in coconut.  Place them on wax paper to cool.  Place in refrigerator or freezer until serving."],
-        image: '../../../public/img/food.jpg'},
+        image: '/img/food.jpg'},
         {id: '2', title: "Date Balls", author: "Samuel Benjamin", prepTime: "20 minutes", totalTime: "60 minutes", servingSize: 6,
         ingrediants: ["1 stick of butter",
                     "1 cup of brown sugar",
@@ -25,7 +25,7 @@ const initState = {
                     "Take off the stove and add the beaten egg and vanilla.",
                     "Return to the stove and cook slowly for 5 minutes. Add the Rice Krispies, mix well and remove from heat.",
                     "Cool mixture slightly.  Roll small balls of the mixture in coconut.  Place them on wax paper to cool.  Place in refrigerator or freezer until serving."],
-        image: '../../../public/img/food.jpg'},
+        image: '/img/food.jpg'},
         {id: '3', title: "Date Balls", author: "Samuel Benjamin", prepTime: "20 minutes", totalTime: "60 minutes", servingSize: 6,
         ingrediants: ["1 stick of butter",
                     "1 cup of brown sugar",
@@ -38,12 +38,18 @@ const initState = {
                     "Take off the stove and add the beaten egg and vanilla.",
                     "Return to the stove and cook slowly for 5 minutes. Add the Rice Krispies, mix well and remove from heat.",
                     "Cool mixture slightly.  Roll small balls of the mixture in coconut.  Place them on wax paper to cool.  Place in refrigerator or freezer until serving."],
-        image: '../../../public/img/food.jpg'}
+        image: '/img/food.jpg'}
     ]
 }
 // need to add some sort of auth and cookbook list to this
 
 const recipeReducer = (state = initState, action) => {
+    switch (action.type) {
+        case 'CREATE_RECIPE': {
+            console.log('Project Created', action.recipe)
+            console.log('bingo')
+        }
+    }
     return state
 }
 

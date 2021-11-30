@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 class EditRecipe extends Component {
     state = { ...this.props.recipe, 
-                ingrediants: this.props.recipe.ingrediants.join('\n'),
+                ingredients: this.props.recipe.ingredients.join('\n'),
                 directions: this.props.recipe.directions.join('\n')}
     handleChange = (e) => {
         this.setState({
@@ -38,8 +38,8 @@ class EditRecipe extends Component {
                         <input type="text" id="servingSize" onChange={this.handleChange} defaultValue={this.state.servingSize}/>
                     </div>
                     <div className="input-field">
-                        <label className="active" htmlFor="ingrediants">Ingrediants</label>
-                        <textarea id="ingrediants"  className="materialize-textarea" onChange={this.handleChange} defaultValue={this.state.ingrediants}></textarea>
+                        <label className="active" htmlFor="ingredients">Ingredients</label>
+                        <textarea id="ingredients"  className="materialize-textarea" onChange={this.handleChange} defaultValue={this.state.ingredients}></textarea>
                     </div>
                     <div className="input-field">
                         <label className="active" htmlFor="directions">Directions</label>

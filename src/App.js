@@ -21,7 +21,6 @@ class App extends Component {
             <Route path='/recipe/create' element={<CreateRecipe />} />
             <Route path='/signin' element={<SignIn />} />
             <Route path='/signup' element={<SignUp />} />
-            
           </Routes>
         </div>
       </BrowserRouter>

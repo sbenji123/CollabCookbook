@@ -10,7 +10,7 @@ class CreateRecipe extends Component {
         prepTime:'',
         totalTime:'',
         servingSize:'',
-        ingrediants:'',
+        ingredients:'',
         directions:'',
         image:''
     }
@@ -46,8 +46,8 @@ class CreateRecipe extends Component {
                         <input type="text" id="servingSize" onChange={this.handleChange}/>
                     </div>
                     <div className="input-field">
-                        <label htmlFor="ingrediants">Ingrediants</label>
-                        <textarea id="ingrediants"  className="materialize-textarea" onChange={this.handleChange}></textarea>
+                        <label htmlFor="ingredients">Ingredients</label>
+                        <textarea id="ingredients"  className="materialize-textarea" onChange={this.handleChange}></textarea>
                     </div>
                     <div className="input-field">
                         <label htmlFor="directions">Directions</label>

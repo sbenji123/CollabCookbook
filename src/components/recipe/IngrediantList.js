@@ -1,16 +1,16 @@
 import React from 'react'
 
-const IngrediantList = ({ingrediants}) => {
+const IngredientList = ({ingredients}) => {
     return (
         <div >
-            <span >Ingrediants</span>       
+            <span >ingredients</span>       
             <ul>
-                { ingrediants.map((ingrediant, index) => {
-                    return(<li key={index}>{ingrediant}</li>)
+                { ingredients.map((ingredient, index) => {
+                    return(<li key={index}>{ingredient}</li>)
                 })}
             </ul>
         </div>
     )
 }
 
-export default IngrediantList
+export default IngredientList

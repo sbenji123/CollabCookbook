@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router';
-import IngrediantList from './IngrediantList'
+import IngredientList from './IngredientList'
 import DirectionList from './DirectionList';
 import { Link } from 'react-router-dom'
 
@@ -20,7 +20,7 @@ const RecipeDetails = ({recipe}) => {
                     </Link>
                 </div>
             </div>
-                <IngrediantList ingrediants={recipe.ingrediants} />
+                <IngredientList ingredients={recipe.ingredients} />
                 <DirectionList directions={recipe.directions} />
         </div>
     )

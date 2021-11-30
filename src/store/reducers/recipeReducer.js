@@ -1,6 +1,6 @@
 const initState = {
     recipe: {id: '1', title: "Date Balls", author: "Samuel Benjamin", prepTime: "20 minutes", totalTime: "60 minutes", servingSize: 6,
-            ingrediants: ["1 stick of butter",
+            ingredients: ["1 stick of butter",
                         "1 cup of brown sugar",
                         "8 oz. chopped dates",
                         "1 egg, beaten",

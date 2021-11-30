@@ -11,8 +11,8 @@ export const createRecipe = (recipe) => {
         // format string to arrays
         const directions = recipe.directions + ''
         recipe.directions = directions.split('\n')
-        const ingrediants = recipe.ingrediants + ''
-        recipe.ingrediants = ingrediants.split('\n')
+        const ingredients = recipe.ingredients + ''
+        recipe.ingredients = ingredients.split('\n')
 
         dispatch({type: 'CREATE_RECIPE', recipe})
         // can do this cuz of JS6 dispatch({type: 'CREATE_RECIPE', recipe: recipe})
@@ -26,8 +26,8 @@ export const editRecipe = (recipe) => {
         // format string to arrays
         const directions = recipe.directions + ''
         recipe.directions = directions.split('\n')
-        const ingrediants = recipe.ingrediants + ''
-        recipe.ingrediants = ingrediants.split('\n')
+        const ingredients = recipe.ingredients + ''
+        recipe.ingredients = ingredients.split('\n')
 
         dispatch({type: 'EDIT_RECIPE', recipe})
     }

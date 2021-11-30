@@ -28,14 +28,14 @@ class CreateRecipe extends Component {
                     <h5 className="grey-text text-darken-3">Create Recipe</h5>
                     <div className="input-field">
                         <label htmlFor="title">Title</label>
-                        <input type="text" id="title" onChange={this.handleChange}/>
+                        <input type="text" id="title" onChange={this.handleChange} defaultValue={this.state.title}/>
                     </div>
                     <div className="input-field">
                         <label htmlFor="prepTime">Prep Time</label>
                         <input type="text" id="prepTime" onChange={this.handleChange}/>
                     </div>
                     <div className="input-field">
-                        <label htmlFor="totalTime">Tottal Time</label>
+                        <label htmlFor="totalTime">Total Time</label>
                         <input type="text" id="totalTime" onChange={this.handleChange}/>
                     </div>
                     <div className="input-field">
@@ -47,7 +47,7 @@ class CreateRecipe extends Component {
                         <textarea id="ingrediants"  className="materialize-textarea" onChange={this.handleChange}></textarea>
                     </div>
                     <div className="input-field">
-                        <label htmlFor="directions">directions</label>
+                        <label htmlFor="directions">Directions</label>
                         <textarea id="directions"  className="materialize-textarea" onChange={this.handleChange}></textarea>
                     </div>
                     <div className="input-field">

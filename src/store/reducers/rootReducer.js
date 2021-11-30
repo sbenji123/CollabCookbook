@@ -5,7 +5,7 @@ import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    recipes: recipeReducer
+    recipe: recipeReducer
 })
 
 export default rootReducer;

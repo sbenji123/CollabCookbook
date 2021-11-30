@@ -23,6 +23,7 @@ const recipeReducer = (state = initState, action) => {
             break
         } case 'CREATE_RECIPE': {
             console.log('Recipe Created', action.recipe)
+            state.recipe = action.recipe
             break
         } case 'EDIT_RECIPE': {
             console.log('Recipe Edited', action.recipe)

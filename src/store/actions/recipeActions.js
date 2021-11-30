@@ -7,6 +7,13 @@ export const navToRecipe = (recipe) => {
 export const createRecipe = (recipe) => {
     return (dispatch, getState) => {
         // make async call to database
+
+        // format string to arrays
+        const directions = recipe.directions + ''
+        recipe.directions = directions.split('\n')
+        const ingrediants = recipe.ingrediants + ''
+        recipe.ingrediants = ingrediants.split('\n')
+
         dispatch({type: 'CREATE_RECIPE', recipe})
         // can do this cuz of JS6 dispatch({type: 'CREATE_RECIPE', recipe: recipe})
     }
@@ -15,6 +22,13 @@ export const createRecipe = (recipe) => {
 export const editRecipe = (recipe) => {
     return (dispatch, getState) => {
         // make async call to database
+
+        // format string to arrays
+        const directions = recipe.directions + ''
+        recipe.directions = directions.split('\n')
+        const ingrediants = recipe.ingrediants + ''
+        recipe.ingrediants = ingrediants.split('\n')
+
         dispatch({type: 'EDIT_RECIPE', recipe})
     }
 }

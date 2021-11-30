@@ -14,8 +14,6 @@ class EditRecipe extends Component {
     }
     handleSubmit = (e) => {
         // e.preventDefault(); //prevents default refresh of page
-        this.state.directions = this.state.directions.split('\n')
-        this.state.ingrediants = this.state.ingrediants.split('\n')
         this.props.editRecipe(this.state)
     }
     render() {

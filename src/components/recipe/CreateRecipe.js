@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createRecipe } from'../../store/actions/recipeActions'
+import { Link } from 'react-router-dom'
 
 class CreateRecipe extends Component {
     state = {
+        id: 1, // need to remove this once going to Firebase
         title:'',
         prepTime:'',
         totalTime:'',
         servingSize:'',
         ingrediants:'',
-        directions:''
+        directions:'',
+        image:''
     }
     handleChange = (e) => {
         this.setState({
@@ -17,8 +20,8 @@ class CreateRecipe extends Component {
         })
     }
     handleSubmit = (e) => {
-        e.preventDefault(); //prevents default refresh of page
-        // console.log(this.state)
+        // e.preventDefault(); //prevents default refresh of page
+        console.log("Submit")
         this.props.createRecipe(this.state)
     }
     render() {
@@ -51,7 +54,9 @@ class CreateRecipe extends Component {
                         <textarea id="directions"  className="materialize-textarea" onChange={this.handleChange}></textarea>
                     </div>
                     <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Create</button>
+                        <Link to={'/recipe/'+this.state.id}>
+                            <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Create</button>
+                        </Link>
                     </div>
                 </form>
             </div>        )

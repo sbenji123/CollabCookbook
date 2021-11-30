@@ -5,28 +5,23 @@ import DirectionList from './DirectionList';
 import { Link } from 'react-router-dom'
 
 const RecipeDetails = ({recipe}) => {
-    console.log(recipe)
     const { id } = useParams(); // for URL after /recipe/:id
     return (
-        <div className="div container section recipe-details">
-            <div className="card horizontal">
+        <div className="container white recipe-details">
+            <div className="row">
                 {displayRecipeImage(recipe.image)}
-                <div className="card-stacked">
-                    <div className="card-content">
-                        <span className="card-title">{recipe.title} - {id}</span>
-                        {quantitativeRecipeDetails(recipe)}
-                    </div>
+                <div className="col s12 m6">
+                    <span>{recipe.title}</span>
+                    {quantitativeRecipeDetails(recipe)}
+                    <Link to={'/recipe/'+id+'/edit'} >
+                        <button class="right btn-floating btn-large waves-effect waves-light red">
+                            <i class="material-icons">edit</i>
+                        </button>
+                    </Link>
                 </div>
             </div>
-            <div className="card">
                 <IngrediantList ingrediants={recipe.ingrediants} />
                 <DirectionList directions={recipe.directions} />
-                <Link to={'/recipe/'+id+'/edit'} >
-                    <button className="btn-floating halfway-fab waves-effect waves-light red">
-                        <i className="material-icons">edit</i>
-                    </button>
-                </Link>
-            </div>
         </div>
     )
 }
@@ -55,7 +50,7 @@ const quantitativeRecipeDetails = (recipe) => {
 const displayRecipeImage = (image) => {
     if (image){
         return (
-            <div className="card-image">
+            <div className="col s12 m6">
                 <img src={image} alt="" />
             </div>
         )

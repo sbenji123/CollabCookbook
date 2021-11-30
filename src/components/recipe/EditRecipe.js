@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { editRecipe } from'../../store/actions/recipeActions'
+import { Link } from 'react-router-dom'
 
 class EditRecipe extends Component {
     state = { ...this.props.recipe, 
@@ -12,12 +13,12 @@ class EditRecipe extends Component {
         })
     }
     handleSubmit = (e) => {
-        e.preventDefault(); //prevents default refresh of page
-        // console.log(this.state)
+        // e.preventDefault(); //prevents default refresh of page
+        this.state.directions = this.state.directions.split('\n')
+        this.state.ingrediants = this.state.ingrediants.split('\n')
         this.props.editRecipe(this.state)
     }
     render() {
-        console.log(this.props)
         return (
             <div className = "container">
                 <form onSubmit={this.handleSubmit} className="white">
@@ -47,7 +48,9 @@ class EditRecipe extends Component {
                         <textarea id="directions" className="materialize-textarea" onChange={this.handleChange} defaultValue={this.state.directions}></textarea>
                     </div>
                     <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Edit</button>
+                        <Link to={'/recipe/'+this.state.id}>
+                            <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Save</button>
+                        </Link>
                     </div>
                 </form>
             </div>        )
@@ -55,7 +58,6 @@ class EditRecipe extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         recipe: state.recipe.recipe
     }

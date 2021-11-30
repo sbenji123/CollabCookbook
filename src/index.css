@@ -36,7 +36,11 @@ textarea.materialize-textarea:focus:not([readonly]){
   box-shadow: none;
 }
 
-#ingrediants{
-  color:red;
-  min-height:10rem;
+img {
+  max-width: 100%;
+}
+
+.recipe-details{
+  margin: 24px auto 0 auto;
+  padding: 10px;
 }

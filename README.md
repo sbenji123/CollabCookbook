@@ -18,7 +18,7 @@
 - Tutorial Helper
   - [Youtube](https://www.youtube.com/playlist?list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3)
   - [Github Repo](https://github.com/iamshaunjp/React-Redux-Firebase-App)
-
+- [Other Collab Cookbook Architecture](https://disquemechudo.github.io/Eric-French/CollaborativeCookbook.html)
 
 # Getting Started with Create React App
 

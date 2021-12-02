@@ -14,8 +14,8 @@ const RecipeDetails = ({recipe}) => {
                     <span>{recipe.title}</span>
                     {quantitativeRecipeDetails(recipe)}
                     <Link to={'/recipe/'+id+'/edit'} >
-                        <button class="right btn-floating btn-large waves-effect waves-light red">
-                            <i class="material-icons">edit</i>
+                        <button className="right btn-floating btn-large waves-effect waves-light red">
+                            <i className="material-icons">edit</i>
                         </button>
                     </Link>
                 </div>

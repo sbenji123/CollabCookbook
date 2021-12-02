@@ -12,7 +12,8 @@ class CreateRecipe extends Component {
         servingSize:'',
         ingredients:'',
         directions:'',
-        image:''
+        image:'',
+        author:''
     }
     handleChange = (e) => {
         this.setState({
@@ -32,6 +33,10 @@ class CreateRecipe extends Component {
                     <div className="input-field">
                         <label htmlFor="title">Title</label>
                         <input type="text" id="title" onChange={this.handleChange} defaultValue={this.state.title}/>
+                    </div>
+                    <div className="input-field">
+                        <label htmlFor="author">Author</label>
+                        <input type="text" id="author" onChange={this.handleChange} defaultValue={this.state.author}/>
                     </div>
                     <div className="input-field">
                         <label htmlFor="prepTime">Prep Time</label>

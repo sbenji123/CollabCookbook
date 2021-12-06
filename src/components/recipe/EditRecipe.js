@@ -26,6 +26,10 @@ class EditRecipe extends Component {
                         <input type="text" id="title" onChange={this.handleChange} defaultValue={this.state.title}/>
                     </div>
                     <div className="input-field">
+                        <label className="active" htmlFor="author">Author</label>
+                        <input type="text" id="author" onChange={this.handleChange} defaultValue={this.state.author}/>
+                    </div>
+                    <div className="input-field">
                         <label className="active" htmlFor="prepTime">Prep Time</label>
                         <input type="text" id="prepTime" onChange={this.handleChange} defaultValue={this.state.prepTime}/>
                     </div>

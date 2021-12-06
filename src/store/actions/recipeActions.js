@@ -1,5 +1,8 @@
 export const navToRecipe = (recipe) => {
     return (dispatch, getState) => {
+        console.log("DISPATCH")
+        console.log(recipe)
+
         dispatch({type: 'NAV_TO_RECIPE', recipe})
     }
 }
@@ -30,5 +33,12 @@ export const editRecipe = (recipe) => {
         recipe.ingredients = ingredients.split('\n')
 
         dispatch({type: 'EDIT_RECIPE', recipe})
+    }
+}
+
+export const removeRecipe = (recipe) => {
+    return (dispatch, getState) => {
+
+        dispatch({type:'REMOVE_RECIPE', recipe})
     }
 }

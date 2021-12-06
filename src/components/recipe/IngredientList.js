@@ -3,7 +3,7 @@ import React from 'react'
 const IngredientList = ({ingredients}) => {
     return (
         <div >
-            <span >ingredients</span>       
+            <span >Ingredients</span>       
             <ul>
                 { ingredients.map((ingredient, index) => {
                     return(<li key={index}>{ingredient}</li>)

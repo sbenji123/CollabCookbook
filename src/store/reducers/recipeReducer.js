@@ -1,5 +1,5 @@
 const initState = {
-    recipe: {id: '1', title: "Date Balls", author: "Samuel Benjamin", prepTime: "20 minutes", totalTime: "60 minutes", servingSize: 6,
+    recipe: {id: '1', title: "Date Balls", author: "Samuel Benjamin", prepTime: "20 minutes", totalTime: "60 minutes", servingSize: "6",
             ingredients: ["1 stick of butter",
                         "1 cup of brown sugar",
                         "8 oz. chopped dates",
@@ -66,6 +66,9 @@ const recipeReducer = (state = initState, action) => {
             console.log('Recipe Created', action.recipe)
             state.recipe = action.recipe
             state.recipeList = [...state.recipeList, action.recipe]
+            break
+        } case 'CREATE_RECIPE_ERROR': {
+            console.log("Create Project Error", action.err)
             break
         } case 'EDIT_RECIPE': {
             console.log('Recipe Edited', action.recipe)

@@ -5,15 +5,14 @@ import { Link } from 'react-router-dom'
 
 class CreateRecipe extends Component {
     state = {
-        id: 1, // need to remove this once going to Firebase
-        title:'',
+        recipeTitle:'',
         prepTime:'',
         totalTime:'',
         servingSize:'',
         ingredients:'',
         directions:'',
         image:'',
-        author:''
+        authorFirstName: "Samuel", authorLastName: "Benjamin" // need to change when atually doing it
     }
     handleChange = (e) => {
         this.setState({
@@ -31,12 +30,8 @@ class CreateRecipe extends Component {
                 <form onSubmit={this.handleSubmit} className="white">
                     <h5 className="grey-text text-darken-3">Create Recipe</h5>
                     <div className="input-field">
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" onChange={this.handleChange} defaultValue={this.state.title}/>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="author">Author</label>
-                        <input type="text" id="author" onChange={this.handleChange} defaultValue={this.state.author}/>
+                        <label htmlFor="recipeTitle">Recipe Title</label>
+                        <input type="text" id="recipeTitle" onChange={this.handleChange} defaultValue={this.state.recipeTitle}/>
                     </div>
                     <div className="input-field">
                         <label htmlFor="prepTime">Prep Time</label>

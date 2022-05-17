@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { editRecipe } from'../../store/actions/recipeActions'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
 class EditRecipe extends Component {
     state = { ...this.props.recipe, 
@@ -22,12 +24,8 @@ class EditRecipe extends Component {
                 <form onSubmit={this.handleSubmit} className="white">
                     <h5 className="grey-text text-darken-3">Edit Recipe</h5>
                     <div className="input-field">
-                        <label className="active" htmlFor="title">Title</label>
-                        <input type="text" id="title" onChange={this.handleChange} defaultValue={this.state.title}/>
-                    </div>
-                    <div className="input-field">
-                        <label className="active" htmlFor="author">Author</label>
-                        <input type="text" id="author" onChange={this.handleChange} defaultValue={this.state.author}/>
+                        <label className="active" htmlFor="recipeTitle">Recipe Title</label>
+                        <input type="text" id="recipeTitle" onChange={this.handleChange} defaultValue={this.state.recipeTitle}/>
                     </div>
                     <div className="input-field">
                         <label className="active" htmlFor="prepTime">Prep Time</label>
@@ -59,10 +57,20 @@ class EditRecipe extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+    console.log("EDIT_STATE",state)
+    console.log('ownProps', ownProps)
+    const recipes = state.firestore.data.recipes;
+    console.log('recipes', recipes)
+    const id = 5
+    const recipe = recipes ? recipes[id] : null;
+    console.log('recipes', recipes)
+    
+    
     return {
-        recipe: state.recipe.recipe
-    }
+      recipe: recipe,
+      id: id,
+    };
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -71,4 +79,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditRecipe)
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect([{ 
+          collection: 'recipes'
+        }])
+  )(EditRecipe);
+
+// export default connect(mapStateToProps, mapDispatchToProps)(EditRecipe)

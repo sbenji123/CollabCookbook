@@ -1,8 +1,6 @@
 import React from 'react';
 import RecipeRow from './RecipeRow'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-
 
 const RecipeList = ({recipeList}) => {
     return (
@@ -21,20 +19,17 @@ const RecipeList = ({recipeList}) => {
                   <td>Delete</td>
                 </tr>
               </thead>
-            { recipeList && recipeList.map(recipe => {
-              return (
-                <RecipeRow targetRecipe={recipe}/>
-              )
-            })}
+              <tbody>
+                { recipeList && recipeList.map(recipe => {
+                  return (
+                    <RecipeRow targetRecipe={recipe} key={recipe.id}/>
+                  )
+                })}
+              </tbody>
             </table>
         </div>
     )
 }
 
-const mapStateToProps = (state) => {
-  return {
-      recipeList: state.recipe.recipeList
-  }
-}
 
-export default connect(mapStateToProps)(RecipeList)
+export default RecipeList;

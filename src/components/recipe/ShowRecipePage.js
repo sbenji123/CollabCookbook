@@ -1,22 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import RecipeDetails from './RecipeDetails'
-import { connect } from 'react-redux';
+import { useParams } from 'react-router'
 
-export class ShowRecipePage extends Component {
-
-    render() {
-        console.log('Show Recipe Page')
-        const { recipe } = this.props
-        return (
-            <RecipeDetails recipe = {recipe} />
-        )
-    }
+const ShowRecipePage = () => {
+    const { id } = useParams()
+    return (
+        <RecipeDetails id={id}/>
+    )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        recipe: state.recipe.recipe
-    }
-}
+export default ShowRecipePage
 
-export default connect(mapStateToProps)(ShowRecipePage);

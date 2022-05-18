@@ -24,11 +24,11 @@ export const createRecipe = (recipe) => {
         authorId: 12345,
         createdAt: new Date(),
       })
-      .then(() => {
-        dispatch({ type: 'CREATE_RECIPE', recipe });
+      .then(created_recipe => {
+        dispatch({ type: 'CREATE_RECIPE', created_recipe });
       })
-      .catch((err) => {
-        dispatch({ type: 'CREATE_PROJECT_ERROR', err });
+      .catch(err => {
+        dispatch({ type: 'CREATE_RECIPE_ERROR', err });
       });
 
     // can do this cuz of JS6 dispatch({type: 'CREATE_RECIPE', recipe: recipe})
@@ -38,8 +38,7 @@ export const createRecipe = (recipe) => {
 export const editRecipe = (recipe) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // make async call to database
-
-    console.log('State', getState);
+    console.log("STATE", recipe);
 
     // format string to arrays
     const directions = recipe.directions + '';
@@ -51,7 +50,7 @@ export const editRecipe = (recipe) => {
     const firestore = getFirestore();
     firestore
       .collection('recipes')
-      .doc()
+      .doc(recipe.id)
       .update({
         ...recipe,
       })
@@ -59,15 +58,28 @@ export const editRecipe = (recipe) => {
         dispatch({ type: 'EDIT_RECIPE', recipe });
       })
       .catch((err) => {
-        dispatch({ type: 'EDIT_PROJECT_ERROR', err });
+        dispatch({ type: 'EDIT_RECIPE_ERROR', err });
       });
 
     // can do this cuz of JS6 dispatch({type: 'CREATE_RECIPE', recipe: recipe})
   };
 };
 
-export const removeRecipe = (recipe) => {
-  return (dispatch, getState) => {
-    dispatch({ type: 'REMOVE_RECIPE', recipe });
+export const deleteRecipe = (id) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    // make async call to database
+    const firestore = getFirestore();
+    firestore
+      .collection('recipes')
+      .doc(id)
+      .delete()
+      .then((recipe) => {
+        dispatch({ type: 'DELETE_RECIPE', recipe });
+      })
+      .catch((err) => {
+        dispatch({ type: 'DELETE_PROJECT_ERROR', err });
+      });
+
+    // can do this cuz of JS6 dispatch({type: 'CREATE_RECIPE', recipe: recipe})
   };
 };

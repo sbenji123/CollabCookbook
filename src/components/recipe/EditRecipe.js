@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { editRecipe } from'../../store/actions/recipeActions'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 class EditRecipe extends Component {
     state = { ...this.props.recipe, 
                 ingredients: this.props.recipe.ingredients.join('\n'),
-                directions: this.props.recipe.directions.join('\n')}
+                directions: this.props.recipe.directions.join('\n'),
+                id: this.props.id
+            }
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
     }
     handleSubmit = (e) => {
-        // e.preventDefault(); //prevents default refresh of page
         this.props.editRecipe(this.state)
     }
     render() {
@@ -58,15 +59,9 @@ class EditRecipe extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log("EDIT_STATE",state)
-    console.log('ownProps', ownProps)
+    const { id } = ownProps;
     const recipes = state.firestore.data.recipes;
-    console.log('recipes', recipes)
-    const id = 5
     const recipe = recipes ? recipes[id] : null;
-    console.log('recipes', recipes)
-    
-    
     return {
       recipe: recipe,
       id: id,
@@ -84,6 +79,4 @@ export default compose(
     firestoreConnect([{ 
           collection: 'recipes'
         }])
-  )(EditRecipe);
-
-// export default connect(mapStateToProps, mapDispatchToProps)(EditRecipe)
+)(EditRecipe);

@@ -1,4 +1,5 @@
-const initState = {
+const initState = {}
+const initState1 = {
   recipe: {
     id: '1',
     recipeTitle: 'Date Balls',
@@ -112,7 +113,7 @@ const recipeReducer = (state = initState, action) => {
       break;
     }
     case 'CREATE_RECIPE': {
-      console.log('Recipe Created', action.recipe);
+      console.log('Recipe Created', action);
       break;
     }
     case 'CREATE_RECIPE_ERROR': {
@@ -123,19 +124,16 @@ const recipeReducer = (state = initState, action) => {
       console.log('Recipe Edited', action.recipe);
       break;
     }
-    case 'EDIT_PROJECT_ERROR': {
+    case 'EDIT_RECIPE_ERROR': {
       console.log('Recipe Edit Error', action.err);
-      break;
-    }
-    case 'REMOVE_RECIPE': {
-      console.log('Recipe Removed', action.recipe);
-      state.recipeList = [
-        ...state.recipeList.filter((recipe) => recipe.id !== action.recipe.id),
-      ];
       break;
     }
     case 'DELETE_RECIPE': {
       console.log('Recipe Deleted', action.recipe);
+      break;
+    }
+    case 'DELETE_RECIPE_ERROR': {
+      console.log('Recipe Edit Error', action.err);
       break;
     }
     default: {

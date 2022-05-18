@@ -7,10 +7,7 @@ import { compose } from 'redux'
 
 class Dashboard extends Component {
     render(){
-        console.log("List")
-
         const { recipeList } = this.props;
-        console.log(recipeList)
         return(
             <div className="dashboard container">
                 <div className="row">

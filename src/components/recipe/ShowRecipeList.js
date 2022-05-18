@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 
 export class ShowRecipeList extends Component {
   render() {
-    console.log('Show Recipe Page');
     const { recipeList } = this.props;
     return <RecipeList recipeList={recipeList} />;
   }

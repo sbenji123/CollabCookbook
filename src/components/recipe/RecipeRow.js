@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { navToRecipe, removeRecipe } from '../../store/actions/recipeActions';
 import { Link } from 'react-router-dom';
+import DeleteRecipe from './DeleteRecipe';
 
 class RecipeRow extends Component {
   state = { ...this.props.targetRecipe };
 
-  removeRecipe = (e) => {
-    // need a way so it doesnt flash but still deletes off page
-    this.props.removeRecipe(this.state);
-  };
+
 
   render() {
-    console.log(this.state);
     return (
       <tr className='row grey-text text-darken-3'>
         <td>
@@ -25,9 +22,7 @@ class RecipeRow extends Component {
           {/* Can put a link to all public recipes created by the author */}
         </td>
         <td>
-          <button className='btn pink lighten-3 z-depth-1' onClick={this.removeRecipe}> 
-            Remove
-          </button>
+          <DeleteRecipe id={this.state.id} />
         </td>
       </tr>
     );
@@ -37,7 +32,6 @@ class RecipeRow extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     navToRecipe: (recipe) => dispatch(navToRecipe(recipe)),
-    removeRecipe: (recipe) => dispatch(removeRecipe(recipe)),
   };
 };
 

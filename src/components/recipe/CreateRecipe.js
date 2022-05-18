@@ -21,8 +21,7 @@ class CreateRecipe extends Component {
     }
     handleSubmit = (e) => {
         // e.preventDefault(); //prevents default refresh of page
-        console.log("Submit")
-        this.props.createRecipe(this.state)
+        this.props.createRecipe(this.state)      
     }
     render() {
         return (
@@ -54,7 +53,7 @@ class CreateRecipe extends Component {
                         <textarea id="directions"  className="materialize-textarea" onChange={this.handleChange}></textarea>
                     </div>
                     <div className="input-field">
-                        <Link to={'/recipe/'+this.state.id}>
+                        <Link to={'/recipe/list'}>
                             <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Create</button>
                         </Link>
                     </div>

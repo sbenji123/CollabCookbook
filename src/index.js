@@ -30,13 +30,13 @@ const rffProps = {
 };
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode> can remove
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rffProps}>
         <App />
       </ReactReduxFirebaseProvider>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
+  // </React.StrictMode>, CAN REMOVE THIS EEVNTUALLY TO GET THINGS OUT OF
   document.getElementById('root')
 );
 

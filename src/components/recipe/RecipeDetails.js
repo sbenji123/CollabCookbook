@@ -5,13 +5,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import { useParams } from 'react-router-dom';
 
 const RecipeDetails = (props) => {
-  console.log("RECIPE DETAILS")
   const { recipe, id } = props;
   if (recipe) {
-    console.log('Recipe', recipe);
     return (
       <div className='container white recipe-details'>
         <div className='row'>
@@ -73,8 +70,6 @@ const displayRecipeImage = (recipe) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("state",state)
-  const param = useParams();
   const { id } = ownProps;
   const recipes = state.firestore.data.recipes;
   const recipe = recipes ? recipes[id] : null;
@@ -87,6 +82,6 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([{ 
-    collection: 'recipes' 
+    collection: 'recipes'
   }])
 )(RecipeDetails);

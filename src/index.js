@@ -7,16 +7,36 @@ import thunk from 'redux-thunk';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './store/reducers/rootReducer';
+import { createFirestoreInstance, getFirestore } from 'redux-firestore';
+import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
+import firebase from './config/fbConfig';
 
 // can have many middleware to enhance the store
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore }))
+);
+
+const rrfConfig = {
+  userProfile: 'users',
+  useFirestoreForProfile: true,
+};
+
+const rffProps = {
+  firebase: firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance: createFirestoreInstance,
+};
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode> can remove
     <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+      <ReactReduxFirebaseProvider {...rffProps}>
+        <App />
+      </ReactReduxFirebaseProvider>
+    </Provider>,
+  // </React.StrictMode>, CAN REMOVE THIS EEVNTUALLY TO GET THINGS OUT OF
   document.getElementById('root')
 );
 

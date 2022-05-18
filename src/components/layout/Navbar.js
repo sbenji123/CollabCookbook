@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className="container">
             <Link to='/' className="brand-logo left">CollaborativeCookbook</Link>
             <SignedInLinks />
-            <SignedOutLinks />
+            {/* <SignedOutLinks /> */}
         </div>
     </nav>          
     )

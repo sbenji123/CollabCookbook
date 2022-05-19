@@ -1,109 +1,4 @@
 const initState = {}
-const initState1 = {
-  recipe: {
-    id: '1',
-    recipeTitle: 'Date Balls',
-    authorFirstName: 'Samuel',
-    authorLastName: 'Benjamin',
-    prepTime: '20 minutes',
-    totalTime: '60 minutes',
-    servingSize: '6',
-    ingredients: [
-      '1 stick of butter',
-      '1 cup of brown sugar',
-      '8 oz. chopped dates',
-      '1 egg, beaten',
-      '1 teaspoon of vanilla',
-      '3 cups of Rice Krispies',
-      '1 package of coconut',
-    ],
-    directions: [
-      'Put the first 3 ingredients in a large skillet and stir on low until it becomes steamy hot, but not boiling.',
-      'Take off the stove and add the beaten egg and vanilla.',
-      'Return to the stove and cook slowly for 5 minutes. Add the Rice Krispies, mix well and remove from heat.',
-      'Cool mixture slightly.  Roll small balls of the mixture in coconut.  Place them on wax paper to cool.  Place in refrigerator or freezer until serving.',
-    ],
-    image: '/img/food.jpg',
-  },
-  recipeList: [
-    {
-      id: '1',
-      recipeTitle: 'Date Balls',
-      authorFirstName: 'Samuel',
-      authorLastName: 'Benjamin',
-      prepTime: '20 minutes',
-      totalTime: '60 minutes',
-      servingSize: 6,
-      ingredients: [
-        '1 stick of butter',
-        '1 cup of brown sugar',
-        '8 oz. chopped dates',
-        '1 egg, beaten',
-        '1 teaspoon of vanilla',
-        '3 cups of Rice Krispies',
-        '1 package of coconut',
-      ],
-      directions: [
-        'Put the first 3 ingredients in a large skillet and stir on low until it becomes steamy hot, but not boiling.',
-        'Take off the stove and add the beaten egg and vanilla.',
-        'Return to the stove and cook slowly for 5 minutes. Add the Rice Krispies, mix well and remove from heat.',
-        'Cool mixture slightly.  Roll small balls of the mixture in coconut.  Place them on wax paper to cool.  Place in refrigerator or freezer until serving.',
-      ],
-      image: '/img/food.jpg',
-    },
-    {
-      id: '2',
-      recipeTitle: 'Date Ball-2',
-      authorFirstName: 'Samuel',
-      authorLastName: 'Benjamin',
-      prepTime: '20 minutes',
-      totalTime: '60 minutes',
-      servingSize: 6,
-      ingredients: [
-        '1 stick of butter',
-        '1 cup of brown sugar',
-        '8 oz. chopped dates',
-        '1 egg, beaten',
-        '1 teaspoon of vanilla',
-        '3 cups of Rice Krispies',
-        '1 package of coconut',
-      ],
-      directions: [
-        'Put the first 3 ingredients in a large skillet and stir on low until it becomes steamy hot, but not boiling.',
-        'Take off the stove and add the beaten egg and vanilla.',
-        'Return to the stove and cook slowly for 5 minutes. Add the Rice Krispies, mix well and remove from heat.',
-        'Cool mixture slightly.  Roll small balls of the mixture in coconut.  Place them on wax paper to cool.  Place in refrigerator or freezer until serving.',
-      ],
-      image: '/img/food.jpg',
-    },
-    {
-      id: '3',
-      title: 'Date Balls-3',
-      authorFirstName: 'Samuel',
-      authorLastName: 'Benjamin',
-      prepTime: '20 minutes',
-      totalTime: '60 minutes',
-      servingSize: 6,
-      ingredients: [
-        '1 stick of butter',
-        '1 cup of brown sugar',
-        '8 oz. chopped dates',
-        '1 egg, beaten',
-        '1 teaspoon of vanilla',
-        '3 cups of Rice Krispies',
-        '1 package of coconut',
-      ],
-      directions: [
-        'Put the first 3 ingredients in a large skillet and stir on low until it becomes steamy hot, but not boiling.',
-        'Take off the stove and add the beaten egg and vanilla.',
-        'Return to the stove and cook slowly for 5 minutes. Add the Rice Krispies, mix well and remove from heat.',
-        'Cool mixture slightly.  Roll small balls of the mixture in coconut.  Place them on wax paper to cool.  Place in refrigerator or freezer until serving.',
-      ],
-      image: '/img/food.jpg',
-    },
-  ],
-};
-// need to add some sort of auth and cookbook list to this
 
 const recipeReducer = (state = initState, action) => {
   switch (action.type) {
@@ -113,7 +8,7 @@ const recipeReducer = (state = initState, action) => {
       break;
     }
     case 'CREATE_RECIPE': {
-      console.log('Recipe Created', action);
+      console.log('Recipe Created', action.recipe);
       break;
     }
     case 'CREATE_RECIPE_ERROR': {

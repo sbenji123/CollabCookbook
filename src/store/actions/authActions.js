@@ -1,4 +1,3 @@
-import { firestoreConnect } from "react-redux-firebase";
 
 
 export const signIn = (credentials) => {

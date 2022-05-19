@@ -14,6 +14,9 @@ export const createRecipe = (recipe) => {
     recipe.directions = directions.split('\n');
     const ingredients = recipe.ingredients + '';
     recipe.ingredients = ingredients.split('\n');
+    const profile = getState().firebase.profile;
+    const authorId = getState().firebase.auth.uid;
+    console.log(profile, authorId)
 
     // make async call to database
     const firestore = getFirestore();
@@ -21,7 +24,9 @@ export const createRecipe = (recipe) => {
       .collection('recipes')
       .add({
         ...recipe,
-        authorId: 12345,
+        authorFirstName: profile.firstName,
+        authorLastName: profile.lastName,
+        authorId: authorId,
         createdAt: new Date(),
       })
       .then(created_recipe => {

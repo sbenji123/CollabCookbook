@@ -7,8 +7,6 @@ import DeleteRecipe from './DeleteRecipe';
 class RecipeRow extends Component {
   state = { ...this.props.targetRecipe };
 
-
-
   render() {
     return (
       <tr className='row grey-text text-darken-3'>

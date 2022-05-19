@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { navToRecipe, removeRecipe } from '../../store/actions/recipeActions';
+import { navToRecipe } from '../../store/actions/recipeActions';
 import { Link } from 'react-router-dom';
 import DeleteRecipe from './DeleteRecipe';
 

@@ -4,15 +4,23 @@ import { deleteRecipe } from '../../store/actions/recipeActions';
 
 
 class DeleteRecipe extends Component {
+  state = {
+    pressedOnce: false
+  }
+
   handleSubmit = (e) => {
-    this.props.deleteRecipe(this.props.id)
+    if (this.state.pressedOnce){
+      this.props.deleteRecipe(this.props.id)
+    } else {
+      this.setState({pressedOnce:true})
+    }
   } 
 
   render(){
     if (this.props.recipe.authorId === this.props.auth.uid){
     return (
       <button className='btn pink lighten-3 z-depth-1' onClick={this.handleSubmit}> 
-        Remove
+        {this.state.pressedOnce ? "Confirm" : "Remove"}
       </button> 
     )} else {
       return null
@@ -21,7 +29,6 @@ class DeleteRecipe extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   const { id } = ownProps;
   const recipes = state.firestore.data.recipes;
   const recipe = recipes ? recipes[id] : null;

@@ -1,27 +1,47 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createRecipe } from'../../store/actions/recipeActions'
-import { Link, Navigate} from 'react-router-dom'
+import { Navigate} from 'react-router-dom'
+
+// need to add image to the state eventually
 
 class CreateRecipe extends Component {
     state = {
-        recipeTitle:'',
-        prepTime:'',
-        totalTime:'',
-        servingSize:'',
-        ingredients:'',
-        directions:'',
-        image:'',
-        recipeCategory: '',
+        recipe: {
+          recipeTitle:'',
+          prepTime:'',
+          totalTime:'',
+          servingSize:'',
+          ingredients:'',
+          directions:'',
+          recipeCategory: '',
+          recipeAttribution: '',
+        },
+        recipeError: null,
+        submitSuccess: false
     }
+
     handleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
+      let newState = {...this.state}
+      newState.recipe[e.target.id] = e.target.value
+      this.setState({ ...newState })
     }
+
     handleSubmit = (e) => {
-        // e.preventDefault(); //prevents default refresh of page
-        this.props.createRecipe(this.state)  
+        if (Object.entries(this.state.recipe).every((element) => {
+          return element[1] && element[1] !== ''
+        })){
+          this.setState({
+            recipeError: null,
+            submitSuccess: true
+          })
+          this.props.createRecipe(this.state.recipe) 
+        } else {
+          e.preventDefault();
+          this.setState({
+            recipeError: "Not all inputs are filled"
+          })
+        }     
     }
     render() {
       const { auth } = this.props;
@@ -32,12 +52,16 @@ class CreateRecipe extends Component {
                   <h5 className="grey-text text-darken-3">Create Recipe</h5>
                   <div className="input-field">
                       <label htmlFor="recipeTitle">Recipe Title</label>
-                      <input type="text" id="recipeTitle" onChange={this.handleChange} defaultValue={this.state.recipeTitle}/>
+                      <input type="text" id="recipeTitle" onChange={this.handleChange} />
                   </div>
                   <div className="input-field">
-                    <label class="active" htmlFor="recipeCategory">Recipe Category</label>
-                    <select id="recipeCategory" name="recipeCategory" className="browser-default" onChange={this.handleChange}>
-                      <option value="" disabled selected>Choose a Category</option>
+                      <label htmlFor="recipeAttribution">Recipe Attribution</label>
+                      <input type="text" id="recipeAttribution" onChange={this.handleChange}/>
+                  </div>
+                  <div className="input-field">
+                    <label className="active" htmlFor="recipeCategory">Recipe Category</label>
+                    <select id="recipeCategory" name="recipeCategory" className="browser-default" defaultValue={"DEFAULT"} onChange={this.handleChange}>
+                      <option value="DEFAULT" disabled>Choose a Category</option>
                       <option value="Appetizer">Appetizer</option>
                       <option value="Soup">Soup</option>
                       <option value="Salad">Salad</option>
@@ -69,9 +93,11 @@ class CreateRecipe extends Component {
                       <textarea id="directions"  className="materialize-textarea" onChange={this.handleChange}></textarea>
                   </div>
                   <div className="input-field">
-                      <Link to={'/recipe/list'}>
-                          <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Create</button>
-                      </Link>
+                      {this.state.submitSuccess ? <Navigate to={'/recipe/list'} /> : null}
+                      <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Create</button>
+                      <div className="red-text center">
+                        { this.state.recipeError ? <p>{this.state.recipeError}</p> : null}
+                      </div>
                   </div>
               </form>
           </div>        

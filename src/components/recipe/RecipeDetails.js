@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import DeleteRecipe from './DeleteRecipe';
 
 const RecipeDetails = (props) => {
-  const { recipe, id } = props;
+  const { auth, recipe, id } = props;
   if (recipe) {
     return (
       <div className='container white recipe-details'>
@@ -16,11 +17,7 @@ const RecipeDetails = (props) => {
           <div className='col s12 m6'>
             <span>{recipe.recipeTitle}</span>
             {quantitativeRecipeDetails(recipe)}
-            <Link to={'/recipe/' + id + '/edit'}>
-              <button className='right btn-floating btn-large waves-effect waves-light red'>
-                <i className='material-icons'>edit</i>
-              </button>
-            </Link>
+            {editButtons(auth, recipe, id)}
           </div>
         </div>
         <IngredientList ingredients={recipe.ingredients} />
@@ -35,6 +32,22 @@ const RecipeDetails = (props) => {
     );
   }
 };
+
+const editButtons = (auth, recipe, id) => {
+  if (recipe.authorId === auth.uid) {
+    return (
+      <div>
+        <Link to={'/recipe/' + id + '/edit'}>
+          <button className='right btn-floating btn-large waves-effect waves-light red'>
+            <i className='material-icons'>edit</i>
+          </button>
+        </Link>
+        <DeleteRecipe id={id}/>
+      </div>
+  )} else {
+    return null
+  }
+}
 
 const quantitativeRecipeDetails = (recipe) => {
   return (
@@ -70,18 +83,20 @@ const displayRecipeImage = (recipe) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state)
   const { id } = ownProps;
   const recipes = state.firestore.data.recipes;
   const recipe = recipes ? recipes[id] : null;
   return {
     recipe: recipe,
     id: id,
+    auth: state.firebase.auth
   };
 };
 
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([{ 
-    collection: 'recipes'
+    collection: 'recipes', 
   }])
 )(RecipeDetails);

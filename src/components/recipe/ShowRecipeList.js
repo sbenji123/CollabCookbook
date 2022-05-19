@@ -19,5 +19,7 @@ const mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([{ collection: 'recipes' }])
-)(ShowRecipeList);
+  firestoreConnect([{ 
+    collection: 'recipes', 
+    orderBy: ['recipeTitle'] 
+  }]))(ShowRecipeList);

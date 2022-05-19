@@ -12,7 +12,7 @@ class CreateRecipe extends Component {
         ingredients:'',
         directions:'',
         image:'',
-        authorFirstName: "Samuel", authorLastName: "Benjamin" // need to change when atually doing it
+        recipeCategory: '',
     }
     handleChange = (e) => {
         this.setState({
@@ -21,7 +21,7 @@ class CreateRecipe extends Component {
     }
     handleSubmit = (e) => {
         // e.preventDefault(); //prevents default refresh of page
-        this.props.createRecipe(this.state)      
+        this.props.createRecipe(this.state)  
     }
     render() {
       const { auth } = this.props;
@@ -33,6 +33,20 @@ class CreateRecipe extends Component {
                   <div className="input-field">
                       <label htmlFor="recipeTitle">Recipe Title</label>
                       <input type="text" id="recipeTitle" onChange={this.handleChange} defaultValue={this.state.recipeTitle}/>
+                  </div>
+                  <div className="input-field">
+                    <label class="active" htmlFor="recipeCategory">Recipe Category</label>
+                    <select id="recipeCategory" name="recipeCategory" className="browser-default" onChange={this.handleChange}>
+                      <option value="" disabled selected>Choose a Category</option>
+                      <option value="Appetizer">Appetizer</option>
+                      <option value="Soup">Soup</option>
+                      <option value="Salad">Salad</option>
+                      <option value="Main">Main</option>
+                      <option value="Baked Good">Baked Good</option>
+                      <option value="Dessert">Dessert</option>
+                      <option value="Side">Side</option>
+                      <option value="Snack">Snack</option>
+                    </select>
                   </div>
                   <div className="input-field">
                       <label htmlFor="prepTime">Prep Time</label>

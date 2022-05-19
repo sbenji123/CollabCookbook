@@ -29,6 +29,19 @@ class EditRecipe extends Component {
                         <input type="text" id="recipeTitle" onChange={this.handleChange} defaultValue={this.state.recipeTitle}/>
                     </div>
                     <div className="input-field">
+                    <label class="active" htmlFor="recipeCategory">Recipe Category</label>
+                    <select id="recipeCategory" name="recipeCategory" className="browser-default" onChange={this.handleChange} defaultValue={this.state.recipeCategory}>
+                      <option value="Appetizer">Appetizer</option>
+                      <option value="Soup">Soup</option>
+                      <option value="Salad">Salad</option>
+                      <option value="Main">Main</option>
+                      <option value="Baked Good">Baked Good</option>
+                      <option value="Dessert">Dessert</option>
+                      <option value="Side">Side</option>
+                      <option value="Snack">Snack</option>
+                    </select>
+                  </div>
+                    <div className="input-field">
                         <label className="active" htmlFor="prepTime">Prep Time</label>
                         <input type="text" id="prepTime" onChange={this.handleChange} defaultValue={this.state.prepTime}/>
                     </div>

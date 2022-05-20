@@ -1,12 +1,19 @@
 import React from 'react'
 
 const IngredientList = ({ingredients}) => {
+  const liStyle = {
+    fontSize: "1rem",
+    marginLeft: "2rem",
+    listStyleType: "circle",
+  }
     return (
         <div >
-            <span >Ingredients</span>       
+            <span>
+              <h5>Ingredients</h5>
+            </span>       
             <ul>
                 { ingredients.map((ingredient, index) => {
-                    return(<li key={index}>{ingredient}</li>)
+                    return(<li style={liStyle} key={index}> {ingredient} </li>)
                 })}
             </ul>
         </div>

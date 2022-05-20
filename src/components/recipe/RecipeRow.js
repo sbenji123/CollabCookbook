@@ -16,7 +16,7 @@ class RecipeRow extends Component {
           </Link>
         </td>
         <td>
-          {this.state.authorFirstName + ' ' + this.state.authorLastName}
+          {this.state.recipeAttribution}
           {/* Can put a link to all public recipes created by the author */}
         </td>
         <td>

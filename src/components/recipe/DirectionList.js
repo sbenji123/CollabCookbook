@@ -1,12 +1,17 @@
 import React from 'react'
 
 const DirectionList = ({directions}) => {
+  const liStyle = {
+    fontSize: "1rem",
+  }
     return (
         <div>
-            <span>Directions</span>       
+            <span>
+              <h5>Directions</h5>
+            </span>       
             <ol>
                 { directions.map((direction, index) => {
-                    return(<li key={index}>{direction}</li>)
+                    return(<li style={liStyle} key={index}>{direction}</li>)
                 })}
             </ol>
         </div>

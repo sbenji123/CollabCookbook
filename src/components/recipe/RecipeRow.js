@@ -11,7 +11,7 @@ class RecipeRow extends Component {
     return (
       <tr className='row grey-text text-darken-3'>
         <td>
-          <Link to={'/recipe/' + this.state.id}>
+          <Link to={'/recipes/' + this.state.id}>
             <span className=''>{this.state.recipeTitle}</span>
           </Link>
         </td>

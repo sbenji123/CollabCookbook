@@ -6,7 +6,7 @@ const RecipeList = ({recipeList}) => {
     return (
         
         <div className="recipe-list container col">
-              <Link to={'/recipe/create'} >
+              <Link to={'/recipes/create'} >
                 <button className="right btn-floating btn-large waves-effect waves-light red">
                     <i className="material-icons">add</i>
                 </button>

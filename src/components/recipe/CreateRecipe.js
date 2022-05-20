@@ -93,7 +93,7 @@ class CreateRecipe extends Component {
                       <textarea id="directions"  className="materialize-textarea" onChange={this.handleChange}></textarea>
                   </div>
                   <div className="input-field">
-                      {this.state.submitSuccess ? <Navigate to={'/recipe/list'} /> : null}
+                      {this.state.submitSuccess ? <Navigate to={'/recipes/list'} /> : null}
                       <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Create</button>
                       <div className="red-text center">
                         { this.state.recipeError ? <p>{this.state.recipeError}</p> : null}

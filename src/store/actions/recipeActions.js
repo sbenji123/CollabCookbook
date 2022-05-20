@@ -16,7 +16,6 @@ export const createRecipe = (recipe) => {
     recipe.ingredients = ingredients.split('\n');
     const profile = getState().firebase.profile;
     const authorId = getState().firebase.auth.uid;
-    console.log(profile, authorId)
 
     // make async call to database
     const firestore = getFirestore();

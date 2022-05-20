@@ -85,7 +85,7 @@ class EditRecipe extends Component {
                         <textarea id="directions" className="materialize-textarea" onChange={this.handleChange} defaultValue={this.state.recipe.directions}></textarea>
                     </div>
                     <div className="input-field">
-                      {this.state.submitSuccess ? <Navigate to={'/recipe/'+this.state.recipe.id} /> : null}
+                      {this.state.submitSuccess ? <Navigate to={'/recipes/'+this.state.recipe.id} /> : null}
                       <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Save</button>
                       <div className="red-text center">
                         { this.state.recipeError ? <p>{this.state.recipeError}</p> : null}

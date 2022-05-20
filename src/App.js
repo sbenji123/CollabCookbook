@@ -16,10 +16,10 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Routes>
-            <Route path="/recipe/:id" element={<ShowRecipePage />} />
-            <Route path="/recipe/:id/edit" element={<ShowRecipeEditPage />} />
-            <Route path="/recipe/create" element={<CreateRecipe />} />
-            <Route path="/recipe/list" element={<ShowRecipeList />} />
+            <Route path="/recipes/:id" element={<ShowRecipePage />} />
+            <Route path="/recipes/:id/edit" element={<ShowRecipeEditPage />} />
+            <Route path="/recipes/create" element={<CreateRecipe />} />
+            <Route path="/recipes/list" element={<ShowRecipeList />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/" element={<Dashboard />} />

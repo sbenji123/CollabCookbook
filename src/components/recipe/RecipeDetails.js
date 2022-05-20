@@ -37,7 +37,7 @@ const editButtons = (auth, recipe, id) => {
   if (recipe.authorId === auth.uid) {
     return (
       <div>
-        <Link to={'/recipe/' + id + '/edit'}>
+        <Link to={'/recipes/' + id + '/edit'}>
           <button className='right btn-floating btn-large waves-effect waves-light red'>
             <i className='material-icons'>edit</i>
           </button>

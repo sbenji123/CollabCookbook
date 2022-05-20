@@ -8,20 +8,19 @@ import { compose } from 'redux';
 import DeleteRecipe from './DeleteRecipe';
 
 const RecipeDetails = (props) => {
+
   const { auth, recipe, id } = props;
   if (recipe) {
     return (
       <div className='container white recipe-details'>
-        <div className='row'>
-          {displayRecipeImage(recipe)}
-          <div className='col s12 m6'>
-            <span>{recipe.recipeTitle}</span>
-            {quantitativeRecipeDetails(recipe)}
-            {editButtons(auth, recipe, id)}
-          </div>
-        </div>
+        {displayHeading(recipe)}
+        {quantitativeRecipeDetails(recipe)}
         <IngredientList ingredients={recipe.ingredients} />
         <DirectionList directions={recipe.directions} />
+        {editButtons(auth, recipe, id)}
+        <div className="card-action grey lighten-4 grey-text">
+            <div>Posted by {recipe.authorFirstName} {recipe.authorLastName}</div>
+          </div>
       </div>
     );
   } else {
@@ -33,27 +32,39 @@ const RecipeDetails = (props) => {
   }
 };
 
-const editButtons = (auth, recipe, id) => {
-  if (recipe.authorId === auth.uid) {
-    return (
-      <div>
-        <Link to={'/recipes/' + id + '/edit'}>
-          <button className='right btn-floating btn-large waves-effect waves-light red'>
-            <i className='material-icons'>edit</i>
-          </button>
-        </Link>
-        <DeleteRecipe id={id}/>
+const displayHeading = (recipe) => {
+  const image = displayRecipeImage(recipe)
+  return (
+    <div className='row'>
+      <div className='s12 m6'>
+        <span>
+          <h4>{recipe.recipeTitle}</h4>
+        </span>
       </div>
-  )} else {
-    return null
+      {image}
+    </div>
+  )
+};
+
+const displayRecipeImage = (recipe) => {
+  if (recipe && 'image' in recipe) {
+    return (
+      <div className='s12 m6'>
+        <img src={recipe.image} alt='' />
+      </div>
+    );
+  } else {
+    return null;
   }
-}
+};
 
 const quantitativeRecipeDetails = (recipe) => {
   return (
     <table className='striped'>
       <thead>
         <tr>
+          <th>Attribution</th>
+          <th>Category</th>
           <th>Prep Time</th>
           <th>Total Time</th>
           <th>Serving Size</th>
@@ -61,6 +72,8 @@ const quantitativeRecipeDetails = (recipe) => {
       </thead>
       <tbody>
         <tr>
+          <td>{recipe.recipeAttribution}</td>
+          <td>{recipe.recipeCategory}</td>
           <td>{recipe.prepTime}</td>
           <td>{recipe.totalTime}</td>
           <td>{recipe.servingSize}</td>
@@ -70,17 +83,22 @@ const quantitativeRecipeDetails = (recipe) => {
   );
 };
 
-const displayRecipeImage = (recipe) => {
-  if (recipe && 'image' in recipe) {
+const editButtons = (auth, recipe, id) => {
+  if (recipe.authorId === auth.uid) {
     return (
-      <div className='col s12 m6'>
-        <img src={recipe.image} alt='' />
+      <div className="row">
+        <div className="col s6 center"><Link to={'/recipes/' + id + '/edit'}>
+          <button className='btn pink lighten-3 z-depth-1'>
+            Edit
+          </button>
+        </Link></div>
+        <div className="col s6 center">
+        <DeleteRecipe id={id}/></div>
       </div>
-    );
-  } else {
-    return null;
+  )} else {
+    return null
   }
-};
+}
 
 const mapStateToProps = (state, ownProps) => {
   console.log(state)
@@ -100,3 +118,4 @@ export default compose(
     collection: 'recipes', 
   }])
 )(RecipeDetails);
+

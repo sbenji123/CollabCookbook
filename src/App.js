@@ -8,7 +8,6 @@ import SignUp from './components/auth/SignUp';
 import CreateRecipe from './components/recipe/CreateRecipe';
 import ShowRecipeEditPage from './components/recipe/ShowRecipeEditPage';
 import ShowRecipeList from './components/recipe/ShowRecipeList';
-import 'materialize-css/dist/css/materialize.min.css';
 
 class App extends Component {
   render() {

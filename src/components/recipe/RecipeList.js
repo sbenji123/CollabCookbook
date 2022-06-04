@@ -4,25 +4,24 @@ import { Link } from 'react-router-dom';
 
 const RecipeList = ({recipeList}) => {
     return (
-        
         <div className="recipe-list container col">
-              <Link to={'/recipes/create'} >
+            <Link to={'/recipes/create'} >
                 <button className="right btn-floating btn-large waves-effect waves-light red">
-                    <i className="material-icons">add</i>
+                    AddR
                 </button>
             </Link>
             <table>
               <thead>
                 <tr>
                   <td>Recipe</td>
-                  <td>Author</td>
+                  <td>Attribution</td>
                   <td>Delete</td>
                 </tr>
               </thead>
               <tbody>
-                { recipeList && recipeList.map(recipe => {
+                { recipeList && Object.keys(recipeList).map(recipeKey => {
                   return (
-                    <RecipeRow targetRecipe={recipe} key={recipe.id}/>
+                    <RecipeRow targetRecipe={recipeList[recipeKey]} id={isNaN(parseInt(recipeKey)) ? recipeKey : recipeList[recipeKey].id} key={recipeKey}/>
                   )
                 })}
               </tbody>

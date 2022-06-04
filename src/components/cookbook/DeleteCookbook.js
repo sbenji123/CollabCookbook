@@ -1,23 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { deleteRecipe } from '../../store/actions/recipeActions';
+import { deleteCookbook } from '../../store/actions/cookbookActions';
 
-
-class DeleteRecipe extends Component {
+class DeleteCookbook extends Component {
   state = {
     pressedOnce: false
   }
 
   handleSubmit = (e) => {
     if (this.state.pressedOnce){
-      this.props.deleteRecipe(this.props.id, this.props.recipe)
+      this.props.deleteCookbook(this.props.id, this.props.cookbook)
     } else {
       this.setState({pressedOnce:true})
     }
   } 
 
   render(){
-    if (this.props.recipe.authorId === this.props.auth.uid){
+    if (this.props.cookbook.authorId === this.props.auth.uid){
     return (
       <button className='btn pink lighten-3 z-depth-1' onClick={this.handleSubmit}> 
         {this.state.pressedOnce ? "Confirm" : "Remove"}
@@ -29,11 +28,9 @@ class DeleteRecipe extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { id } = ownProps;
-  const recipes = state.firestore.data.recipes;
-  const recipe = recipes ? recipes[id] : null;
+  const { id } = ownProps.cookbook;
+  console.log(id)
   return {
-    recipe: recipe,
     id: id,
     auth: state.firebase.auth
   };
@@ -41,11 +38,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRecipe: (id, recipe) => dispatch(deleteRecipe(id, recipe)),
+    deleteCookbook: (id, cookbook) => dispatch(deleteCookbook(id, cookbook)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteRecipe);
-// export default DeleteRecipe
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteCookbook);
+// export default deleteCookbook
 
 

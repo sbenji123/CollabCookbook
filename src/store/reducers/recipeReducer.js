@@ -47,6 +47,14 @@ const recipeReducer = (state = initState, action) => {
       console.log('Recipe Edit In User Error', action.err);
       break;
     }
+    case 'EDIT_RECIPE_IN_COOKBOOK': {
+      console.log('Recipe Edited In Cookbook', action.recipe);
+      break;
+    }
+    case 'EDIT_RECIPE_IN_COOKBOOK_ERROR': {
+      console.log('Recipe Edit In Cookbook Error', action.err);
+      break;
+    }
     case 'DELETE_RECIPE': {
       console.log('Recipe Deleted', action.recipe);
       break;

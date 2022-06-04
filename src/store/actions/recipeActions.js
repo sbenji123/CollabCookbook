@@ -29,6 +29,7 @@ export const createRecipe = (recipe, cookbookId) => {
       cookbooks: cookbookId ? [cookbookId] : []
     }
 
+    // add to recipe database
     const firestore = getFirestore();
     firestore
       .collection('recipes')
@@ -39,13 +40,19 @@ export const createRecipe = (recipe, cookbookId) => {
         return created_recipe
       })
       .then((created_recipe) => {
+        const recipeBlurb = {
+            recipeId: created_recipe.id,
+            recipeTitle: recipe.recipeTitle,
+            recipeAttribution: recipe.recipeAttribution
+        }
+        console.log(recipeBlurb)
         // add new recipe to user's recipes
         firestore
           .collection('users')
           .doc(authorId)
-          .collection('recipes')
-          .doc(created_recipe.id)
-          .set({...newRecipe})
+          .update({
+            recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+          })
           .then(updated_user => {
             dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER', updated_user });
             return updated_user
@@ -60,9 +67,9 @@ export const createRecipe = (recipe, cookbookId) => {
           firestore
             .collection('cookbooks')
             .doc(cookbookId)
-            .collection('recipes')
-            .doc(created_recipe.id)
-            .set({...newRecipe})
+            .update({
+              recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+            })
             .then(updated_cookbook => {
               dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK', updated_cookbook });
               return updated_cookbook
@@ -78,58 +85,114 @@ export const createRecipe = (recipe, cookbookId) => {
   };
 };
 
-export const editRecipe = (recipe) => {
+const changedTitle = (oldRecipe, newRecipe) => {
+  return oldRecipe.recipeTitle !== newRecipe.recipeTitle
+}
+
+const changedAttribution = (oldRecipe, newRecipe) => {
+  console.log(oldRecipe, newRecipe)
+  return oldRecipe.recipeAttribution !== newRecipe.recipeAttribution
+
+}
+
+export const editRecipe = (oldRecipe, newRecipe) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // make async call to database
-    console.log("STATE", recipe);
+    console.log("STATE", oldRecipe);
 
     // format string to arrays
-    const directions = recipe.directions + '';
-    recipe.directions = directions.split('\n');
-    const ingredients = recipe.ingredients + '';
-    recipe.ingredients = ingredients.split('\n');
+    const directions = newRecipe.directions + '';
+    newRecipe.directions = directions.split('\n');
+    const ingredients = newRecipe.ingredients + '';
+    newRecipe.ingredients = ingredients.split('\n');
 
     // edit in recipe database
     const firestore = getFirestore();
     firestore
       .collection('recipes')
-      .doc(recipe.id)
+      .doc(newRecipe.id)
       .update({
-        ...recipe,
+        ...newRecipe,
       })
       .then(() => {
-        dispatch({ type: 'EDIT_RECIPE', recipe });
+        dispatch({ type: 'EDIT_RECIPE', newRecipe });
       })
       .catch((err) => {
         dispatch({ type: 'EDIT_RECIPE_ERROR', err });
       });
     
-      
-    // edit in user database
-    const authorId = getState().firebase.auth.uid;
-    firestore
-      .collection('users')
-      .doc(authorId)
-      .collection('recipes')
-      .doc(recipe.id)
-      .update({
-        ...recipe
+    if (changedAttribution(oldRecipe, newRecipe) || changedTitle(oldRecipe, newRecipe)) {
+      console.log("Deep Dive needed for recipe edit")
+      const oldRecipeBlurb = {
+        recipeId: oldRecipe.id,
+        recipeTitle: oldRecipe.recipeTitle,
+        recipeAttribution: oldRecipe.recipeAttribution
+      }
+      const newRecipeBlurb = {
+        recipeId: newRecipe.id,
+        recipeTitle: newRecipe.recipeTitle,
+        recipeAttribution: newRecipe.recipeAttribution
+      }
+      // edit in user database
+      const authorId = getState().firebase.auth.uid;
+      firestore
+        .collection('users')
+        .doc(authorId)
+        .update({
+          recipes: firestore.FieldValue.arrayRemove(oldRecipeBlurb)
+        })
+      .then(() => {
+        firestore
+          .collection('users')
+          .doc(authorId)
+          .update({
+            recipes: firestore.FieldValue.arrayUnion(newRecipeBlurb)
+          })
       })
       .then(() => {
-        dispatch({ type: 'EDIT_RECIPE_IN_USER', recipe });
+        dispatch({ type: 'EDIT_RECIPE_IN_USER', newRecipe });
       })
       .catch((err) => {
         dispatch({ type: 'EDIT_RECIPE_IN_USER_ERROR', err });
       });
 
-      // edit in all cookbooks that it is in
+        // edit in all cookbooks that it is in
+        const cookbooksRecipeIsIn = newRecipe.cookbooks
+        cookbooksRecipeIsIn.forEach((cookbookId) => {
+          firestore
+            .collection('cookbooks')
+            .doc(cookbookId)
+            .update({
+              recipes: firestore.FieldValue.arrayRemove(oldRecipeBlurb)
+            })
+          .then(() => {
+            firestore
+              .collection('cookbooks')
+              .doc(cookbookId)
+              .update({
+                recipes: firestore.FieldValue.arrayUnion(newRecipeBlurb)
+              })
+          })
+          .then(() => {
+            dispatch({ type: 'EDIT_RECIPE_IN_COOKBOOK', newRecipe });
+          })
+          .catch((err) => {
+            dispatch({ type: 'EDIT_RECIPE_IN_COOKBOOK_ERROR', err });
+          });
+        })
+    }
 
     // can do this cuz of JS6 dispatch({type: 'CREATE_RECIPE', recipe: recipe})
   };
 };
 
-export const deleteRecipe = (id, recipe) => {
+export const deleteRecipeCompletely = (id, recipe) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const recipeBlurb = {
+      recipeId: id,
+      recipeTitle: recipe.recipeTitle,
+      recipeAttribution: recipe.recipeAttribution
+  }
     
     // delete from recipe database
     const firestore = getFirestore();
@@ -138,7 +201,6 @@ export const deleteRecipe = (id, recipe) => {
       .doc(id)
       .delete()
       .then((recipe) => {
-        console.log("Del Rep",recipe)
         dispatch({ type: 'DELETE_RECIPE', recipe });
       })
       .catch((err) => {
@@ -150,9 +212,9 @@ export const deleteRecipe = (id, recipe) => {
     firestore
       .collection('users')
       .doc(authorId)
-      .collection('recipes')
-      .doc(id)
-      .delete()
+      .update({
+        recipes: firestore.FieldValue.arrayRemove(recipeBlurb)
+      })
       .then((recipe) => {
         dispatch({ type: 'DELETE_RECIPE_FROM_USER', recipe });
       })
@@ -162,16 +224,14 @@ export const deleteRecipe = (id, recipe) => {
 
     // delete in all cookbooks that it is in
     const allCookbooks = recipe.cookbooks
-    console.log("ALL COOKBOOKS", allCookbooks)
     allCookbooks.forEach((cookbookId) => {
       firestore
         .collection('cookbooks')
         .doc(cookbookId)
-        .collection('recipes')
-        .doc(id)
-        .delete()
+        .update({
+          recipes: firestore.FieldValue.arrayRemove(recipeBlurb)
+        })
         .then((recipe) => {
-          console.log("SUCCESS:", recipe)
           dispatch({ type: 'DELETE_RECIPE_FROM_COOKBOOK', recipe });
         })
         .catch((err) => {

@@ -12,6 +12,7 @@ export const createCookbook = (cookbook) => {
         authorFirstName: profile.firstName,
         authorLastName: profile.lastName,
         authorId: authorId,
+        recipes: [],
         createdAt: new Date(),
       })
       .then(created_recipe => {
@@ -32,20 +33,34 @@ const isRecipeInCookbook = (cookbook, recipeId) => {
 export const addRecipeToCookbookById = (cookbookId, recipeId) =>{
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     if (isRecipeInCookbook(cookbookId, recipeId)){
+      console.log("Repeat ID in cookbook")
     } else {
       // make async call to database
       const firestore = getFirestore();
       firestore
         .collection('recipes')
         .doc(recipeId)
+        .update({
+          cookbooks: firestore.FieldValue.arrayUnion(cookbookId)
+        })
+
+      firestore
+        .collection('recipes')
+        .doc(recipeId)
         .get()
-        .then((recipe) => {
+        .then((recipeObject) => {
+          const recipe = recipeObject.data()
+          const recipeBlurb = {
+            recipeId: recipeId,
+            recipeTitle: recipe.recipeTitle,
+            recipeAttribution: recipe.recipeAttribution
+          }
           firestore
             .collection('cookbooks')
             .doc(cookbookId)
-            .collection('recipes')
-            .doc(recipeId)
-            .set({...recipe.data()})
+            .update({
+              recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+            })
             .then((added_recipe) => {
               dispatch({ type: 'ADD_RECIPE_BY_ID_TO_COOKBOOK', added_recipe });
             })

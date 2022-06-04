@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { deleteRecipe } from '../../store/actions/recipeActions';
+import { deleteRecipeCompletely } from '../../store/actions/recipeActions';
 
 
 class DeleteRecipe extends Component {
@@ -10,7 +10,7 @@ class DeleteRecipe extends Component {
 
   handleSubmit = (e) => {
     if (this.state.pressedOnce){
-      this.props.deleteRecipe(this.props.id, this.props.recipe)
+      this.props.deleteRecipeCompletely(this.props.id, this.props.recipe)
     } else {
       this.setState({pressedOnce:true})
     }
@@ -41,7 +41,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRecipe: (id, recipe) => dispatch(deleteRecipe(id, recipe)),
+    deleteRecipeCompletely: (id, recipe) => dispatch(deleteRecipeCompletely(id, recipe)),
   };
 };
 

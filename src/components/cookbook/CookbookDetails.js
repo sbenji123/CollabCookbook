@@ -8,13 +8,13 @@ import { createRecipe } from '../../store/actions/recipeActions';
 import AddRecipeToCookbook from './AddRecipeToCookbook';
 
 const CookbookDetails = (props) => {
-  const { createRecipe, auth, cookbook, cookbookRecipes, id } = props;
+  const { createRecipe, auth, cookbook, id } = props;
   if (cookbook) {
     return (
       <div className='container white cookbook-details'>
         {displayHeading(cookbook)}
         {editButtons(auth, cookbook, id, createRecipe)}
-        <RecipeList recipeList={cookbookRecipes} />
+        <RecipeList recipeList={cookbook.recipes} />
         <div className="card-action grey lighten-4 grey-text">
             <div>Posted by {cookbook.authorFirstName} {cookbook.authorLastName}</div>
           </div>
@@ -90,11 +90,11 @@ const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps;
   const cookbooks = state.firestore.data.cookbooks;
   const cookbook = cookbooks ? cookbooks[id] : null;
+  console.log(state)
   return {
     cookbook: cookbook,
     id: id,
     auth: state.firebase.auth,
-    cookbookRecipes: state.firestore.data.cookbookRecipes
   };
 };
 
@@ -106,18 +106,12 @@ const mapDispatchToProps = (dispatch) => {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ 
-    collection: 'cookbooks',
-    orderBy: ['cookbookTitle'] 
-  }]),
   firestoreConnect((state)=>{
     return[{
       collection: 'cookbooks',
-      doc: state.id,
-      subcollections: [{
-        collection: 'recipes'
-      }],
-      storeAs: 'cookbookRecipes'
+      orderBy: 'cookbookTitle'
+      // doc: state.id,
+      // storeAs: 'cookbook'
     }]
   }),
 )(CookbookDetails);

@@ -33,6 +33,7 @@ const CreateButton = (props) => {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
     cookbookList: state.firestore.ordered.cookbooks,
     auth: state.firebase.auth

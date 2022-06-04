@@ -36,7 +36,6 @@ const mapStateToProps = (state) => {
   return {
     cookbookList: state.firestore.ordered.cookbooks,
     auth: state.firebase.auth
-
   };
 };
 

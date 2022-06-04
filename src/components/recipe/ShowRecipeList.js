@@ -36,7 +36,6 @@ const CreateButton = (props) => {
 
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     recipeList: state.firestore.ordered.recipes,
     auth: state.firebase.auth

@@ -15,9 +15,9 @@ const CookbookRow = (props) => {
         {cookbook.cookbookAttribution}
         {/* Can put a link to all public recipes created by the author */}
       </td>
-      <td>
-        Delete{/* <DeleteCookbook id={this.state.id} /> */}
-      </td>
+      {/* <td>
+        Delete{/* <DeleteCookbook id={this.state.id} />}
+      </td> */}
     </tr>
   );
 }

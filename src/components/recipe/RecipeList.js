@@ -9,7 +9,7 @@ const RecipeList = ({recipeList}) => {
                 <tr>
                   <td>Recipe</td>
                   <td>Attribution</td>
-                  <td>Delete</td>
+                  {/* <td>Delete</td> */}
                 </tr>
               </thead>
               <tbody>

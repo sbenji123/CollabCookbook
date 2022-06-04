@@ -1,22 +1,16 @@
 import React from 'react';
 import CookbookRow from './CookbookRow'
-import { Link } from 'react-router-dom';
 
 const CookbookList = ({cookbookList}) => {
     return (
         
         <div className="cookbook-list container col">
-            <Link to={'/cookbooks/create'} >
-                <button className="right btn-floating btn-large waves-effect waves-light red">
-                    AddC
-                </button>
-            </Link>
             <table>
               <thead>
                 <tr>
                   <td>Cookbook</td>
                   <td>Author</td>
-                  <td>Delete</td>
+                  {/* <td>Delete</td> */}
                 </tr>
               </thead>
               <tbody>

@@ -19,9 +19,9 @@ class RecipeRow extends Component {
           {this.state.recipeAttribution}
           {/* Can put a link to all public recipes created by the author */}
         </td>
-        <td>
-          {/* <DeleteRecipe id={this.state.id} /> */}
-        </td>
+        {/* <td>
+          <DeleteRecipe id={this.state.id} />
+        </td> */}
       </tr>
     );
   }

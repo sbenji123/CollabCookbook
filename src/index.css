@@ -44,3 +44,13 @@ img {
   margin: 24px auto 0 auto;
   padding: 10px;
 }
+.cookbook-details{
+  margin: 24px auto 0 auto;
+  padding: 10px;
+}
+
+.edit-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

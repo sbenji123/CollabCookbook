@@ -11,7 +11,7 @@ class RecipeRow extends Component {
     return (
       <tr className='row grey-text text-darken-3'>
         <td>
-          <Link to={'/recipes/' + this.state.id}>
+          <Link to={'/recipes/' + this.props.id}>
             <span className=''>{this.state.recipeTitle}</span>
           </Link>
         </td>
@@ -20,7 +20,7 @@ class RecipeRow extends Component {
           {/* Can put a link to all public recipes created by the author */}
         </td>
         <td>
-          <DeleteRecipe id={this.state.id} />
+          {/* <DeleteRecipe id={this.state.id} /> */}
         </td>
       </tr>
     );

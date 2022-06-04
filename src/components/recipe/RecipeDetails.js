@@ -101,7 +101,6 @@ const editButtons = (auth, recipe, id) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   const { id } = ownProps;
   const recipes = state.firestore.data.recipes;
   const recipe = recipes ? recipes[id] : null;
@@ -115,7 +114,8 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([{ 
-    collection: 'recipes', 
+    collection: 'recipes',
+    orderBy: ['recipeTitle'] 
   }])
 )(RecipeDetails);
 

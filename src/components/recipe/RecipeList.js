@@ -1,15 +1,9 @@
 import React from 'react';
 import RecipeRow from './RecipeRow'
-import { Link } from 'react-router-dom';
 
 const RecipeList = ({recipeList}) => {
     return (
-        <div className="recipe-list container col">
-            <Link to={'/recipes/create'} >
-                <button className="right btn-floating btn-large waves-effect waves-light red">
-                    AddR
-                </button>
-            </Link>
+        <div>
             <table>
               <thead>
                 <tr>

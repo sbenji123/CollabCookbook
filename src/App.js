@@ -15,25 +15,28 @@ import ShowCookbookEditPage from './components/cookbook/ShowCookbookEditPage';
 import ShowCreateRecipeInCookbook from './components/cookbook/ShowCreateRecipeInCookbook';
 
 class App extends Component {
+
   render() {
     return (
       <BrowserRouter>
         <div className="App">
           <Navbar />
-          <Routes>
-            <Route path="/recipes/:id" element={<ShowRecipePage />} />
-            <Route path="/recipes/:id/edit" element={<ShowRecipeEditPage />} />
-            <Route path="/recipes/create" element={<CreateRecipe />} />
-            <Route path="/recipes/list" element={<ShowRecipeList />} />
-            <Route path="/cookbooks/:id" element={<ShowCookbookPage />} />
-            <Route path="/cookbooks/:id/recipe/create" element={<ShowCreateRecipeInCookbook />}/>
-            <Route path="/cookbooks/:id/edit" element={<ShowCookbookEditPage />} />
-            <Route path="/cookbooks/create" element={<CreateCookbook />} />
-            <Route path="/cookbooks/list" element={<ShowCookbookList />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/" element={<Dashboard />} />
-          </Routes>
+          <div className="body-container">
+            <Routes>
+              <Route path="/recipes/:id" element={<ShowRecipePage />} />
+              <Route path="/recipes/:id/edit" element={<ShowRecipeEditPage />} />
+              <Route path="/recipes/create" element={<CreateRecipe />} />
+              <Route path="/recipes/list" element={<ShowRecipeList />} />
+              <Route path="/cookbooks/:id" element={<ShowCookbookPage />} />
+              <Route path="/cookbooks/:id/recipe/create" element={<ShowCreateRecipeInCookbook />}/>
+              <Route path="/cookbooks/:id/edit" element={<ShowCookbookEditPage />} />
+              <Route path="/cookbooks/create" element={<CreateCookbook />} />
+              <Route path="/cookbooks/list" element={<ShowCookbookList />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/" element={<Dashboard />} />
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
     );

@@ -34,19 +34,6 @@ export const createCookbook = (cookbook) => {
   };
 };
 
-const isRecipeInCookbook = (cookbookId, recipeId, getFirestore) => {
-  const firestore = getFirestore()
-  firestore.collection('recipes').doc(recipeId).get()
-    .then((recipe) => {
-      if (recipe.exists){
-        console.log(recipe.data().cookbooks.includes(cookbookId))
-        return recipe.data().cookbooks.includes(cookbookId)
-      } 
-    }).catch((err) => {
-      return false
-    })
-}
-
 export const addRecipeToCookbookById = (cookbookId, recipeId) =>{
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();

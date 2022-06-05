@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RecipeList from './recipe/RecipeList'
 import CookbookList from './cookbook/CookbookList'
 import { connect } from 'react-redux';
-import { firebaseConnect, firestoreConnect } from 'react-redux-firebase'
+import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 
 class Dashboard extends Component {

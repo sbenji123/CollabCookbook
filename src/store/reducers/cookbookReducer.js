@@ -36,6 +36,14 @@ const cookbookReducer = (state = initState, action) => {
       console.log('Add recipe by id to cookbook Error', action.err);
       break;
     }
+    case 'DELETE_RECIPE_BY_ID_FROM_COOKBOOK': {
+      console.log('Delete recipe by from to cookbook', action.cookbook);
+      break;
+    }
+    case 'DELETE_RECIPE_BY_ID_FROM_COOKBOOK_ERROR': {
+      console.log('Delete recipe by id from cookbook Error', action.err);
+      break;
+    }
     default: {
       console.log('No action associated with', action.type);
     }

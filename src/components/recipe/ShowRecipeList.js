@@ -34,7 +34,6 @@ const CreateButton = (props) => {
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
     recipeList: state.firestore.ordered.recipes,

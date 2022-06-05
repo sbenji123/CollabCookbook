@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { deleteRecipe } from '../../store/actions/recipeActions';
-
+import { deleteRecipeCompletely } from '../../store/actions/recipeActions';
+import { Navigate } from 'react-router-dom';
 
 class DeleteRecipe extends Component {
   state = {
-    pressedOnce: false
+    pressedOnce: false,
+    submitted: false
   }
 
   handleSubmit = (e) => {
     if (this.state.pressedOnce){
-      this.props.deleteRecipe(this.props.id, this.props.recipe)
+      this.props.deleteRecipeCompletely(this.props.id, this.props.recipe)
+      this.setState({submitted: true})
     } else {
       this.setState({pressedOnce:true})
     }
@@ -19,9 +21,12 @@ class DeleteRecipe extends Component {
   render(){
     if (this.props.recipe.authorId === this.props.auth.uid){
     return (
-      <button className='btn pink lighten-3 z-depth-1' onClick={this.handleSubmit}> 
-        {this.state.pressedOnce ? "Confirm" : "Remove"}
-      </button> 
+      <div>
+        {this.state.submitted ? <Navigate to={'/recipes/list'} /> : null}
+        <button className='btn pink lighten-3 z-depth-1' onClick={this.handleSubmit}> 
+          {this.state.pressedOnce ? "Confirm" : "Remove"}
+        </button> 
+      </div>
     )} else {
       return null
     }
@@ -41,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteRecipe: (id, recipe) => dispatch(deleteRecipe(id, recipe)),
+    deleteRecipeCompletely: (id, recipe) => dispatch(deleteRecipeCompletely(id, recipe)),
   };
 };
 

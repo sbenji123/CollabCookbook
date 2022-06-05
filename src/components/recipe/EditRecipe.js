@@ -28,7 +28,8 @@ class EditRecipe extends Component {
           recipeError: null,
           submitSuccess: true
         })
-        this.props.editRecipe(this.state.recipe) 
+        
+        this.props.editRecipe(this.props.oldRecipe, this.state.recipe) 
       } else {
         e.preventDefault();
         this.setState({
@@ -101,6 +102,7 @@ const mapStateToProps = (state, ownProps) => {
     const recipes = state.firestore.data.recipes;
     const recipe = recipes ? recipes[id] : null;
     return {
+      oldRecipe: recipe,
       recipe: recipe,
       id: id,
     };
@@ -108,7 +110,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        editRecipe: (recipe) => dispatch(editRecipe(recipe))
+        editRecipe: (oldRecipe, newRecipe) => dispatch(editRecipe(oldRecipe, newRecipe))
     }
 }
 

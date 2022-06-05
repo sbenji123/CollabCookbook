@@ -3,6 +3,11 @@ export const createCookbook = (cookbook) => {
     const profile = getState().firebase.profile;
     const authorId = getState().firebase.auth.uid;
 
+    const cookbookBlurb = {
+      cookbookTitle: cookbook.cookbookTitle,
+      cookbookAttribution: cookbook.cookbookAttribution
+    }
+
     // make async call to database
     const firestore = getFirestore();
     firestore
@@ -15,8 +20,11 @@ export const createCookbook = (cookbook) => {
         recipes: [],
         createdAt: new Date(),
       })
-      .then(created_recipe => {
-        dispatch({ type: 'CREATE_COOKBOOK', created_recipe });
+      .then(created_cookbook => {
+        firestore.collection("users").doc(authorId).update({
+          cookbooks: firestore.FieldValue.arrayUnion({...cookbookBlurb, cookbookId: created_cookbook.id})
+        })
+        dispatch({ type: 'CREATE_COOKBOOK', created_cookbook });
       })
       .catch(err => {
         dispatch({ type: 'CREATE_COOKBOOK_ERROR', err });
@@ -26,57 +34,132 @@ export const createCookbook = (cookbook) => {
   };
 };
 
-const isRecipeInCookbook = (cookbook, recipeId) => {
-  return false
+const isRecipeInCookbook = (cookbookId, recipeId, getFirestore) => {
+  const firestore = getFirestore()
+  firestore.collection('recipes').doc(recipeId).get()
+    .then((recipe) => {
+      if (recipe.exists){
+        console.log(recipe.data().cookbooks.includes(cookbookId))
+        return recipe.data().cookbooks.includes(cookbookId)
+      } 
+    }).catch((err) => {
+      return false
+    })
 }
 
 export const addRecipeToCookbookById = (cookbookId, recipeId) =>{
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    if (isRecipeInCookbook(cookbookId, recipeId)){
-      console.log("Repeat ID in cookbook")
-    } else {
-      // make async call to database
-      const firestore = getFirestore();
-      firestore
-        .collection('recipes')
-        .doc(recipeId)
-        .update({
-          cookbooks: firestore.FieldValue.arrayUnion(cookbookId)
-        })
-
-      firestore
-        .collection('recipes')
-        .doc(recipeId)
-        .get()
-        .then((recipeObject) => {
-          const recipe = recipeObject.data()
-          const recipeBlurb = {
-            recipeId: recipeId,
-            recipeTitle: recipe.recipeTitle,
-            recipeAttribution: recipe.recipeAttribution
-          }
+    const firestore = getFirestore();
+    firestore.collection('recipes').doc(recipeId).get()
+    .then((recipe) => {
+      if (recipe.exists){
+        console.log(recipe.data().cookbooks.includes(cookbookId))
+        return recipe.data().cookbooks.includes(cookbookId)
+      } else {
+        return false
+      }
+    }).then((recipeAlreadyPresent) => {
+        if (recipeAlreadyPresent){
+          console.log("Repeat ID in cookbook")
+        } else {
+          console.log("ADDING")
+          // make async call to database
+          
           firestore
-            .collection('cookbooks')
-            .doc(cookbookId)
+            .collection('recipes')
+            .doc(recipeId)
             .update({
-              recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+              cookbooks: firestore.FieldValue.arrayUnion(cookbookId)
             })
-            .then((added_recipe) => {
-              dispatch({ type: 'ADD_RECIPE_BY_ID_TO_COOKBOOK', added_recipe });
+
+          firestore
+            .collection('recipes')
+            .doc(recipeId)
+            .get()
+            .then((recipeObject) => {
+              const recipe = recipeObject.data()
+              const recipeBlurb = {
+                recipeId: recipeId,
+                recipeTitle: recipe.recipeTitle,
+                recipeAttribution: recipe.recipeAttribution
+              }
+              firestore
+                .collection('cookbooks')
+                .doc(cookbookId)
+                .update({
+                  recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+                })
+                .then((added_recipe) => {
+                  dispatch({ type: 'ADD_RECIPE_BY_ID_TO_COOKBOOK', added_recipe });
+                })
             })
-        })
-        .catch(err => {
-          dispatch({ type: 'ADD_RECIPE_BY_ID_TO_COOKBOOK_ERROR', err });
-        });
-    }
+            .catch(err => {
+              dispatch({ type: 'ADD_RECIPE_BY_ID_TO_COOKBOOK_ERROR', err });
+            });
+        }
+    }).catch((err) => {
+      dispatch({ type: 'ADD_RECIPE_BY_ID_TO_COOKBOOK_ERROR', err });
+    })
   };
 };
 
+export const deleteRecipeFromCookbook = (cookbookId, recipeId) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firestore = getFirestore();
+    firestore.collection('recipes').doc(recipeId).get()
+    .then((recipe) => {
+      if (recipe.exists){
+        return recipe.data().cookbooks.includes(cookbookId)
+      } else {
+        return false
+      }
+    }).then((recipePresent) => {
+      if (recipePresent){
+        // make async call to database
+        const firestore = getFirestore();
+        firestore
+          .collection('recipes')
+          .doc(recipeId)
+          .update({
+            cookbooks: firestore.FieldValue.arrayRemove(cookbookId)
+          })
+
+        firestore
+          .collection('recipes')
+          .doc(recipeId)
+          .get()
+          .then((recipeObject) => {
+            const recipe = recipeObject.data()
+            const recipeBlurb = {
+              recipeId: recipeId,
+              recipeTitle: recipe.recipeTitle,
+              recipeAttribution: recipe.recipeAttribution
+            }
+            firestore
+              .collection('cookbooks')
+              .doc(cookbookId)
+              .update({
+                recipes: firestore.FieldValue.arrayRemove(recipeBlurb)
+              })
+              .then((added_recipe) => {
+                dispatch({ type: 'DELETE_RECIPE_BY_ID_FROM_COOKBOOK', added_recipe });
+              })
+          })
+        .catch(err => {
+          dispatch({ type: 'DELETE_RECIPE_BY_ID_FROM_COOKBOOK_ERROR', err });
+        });
+      } else {
+        console.log("Recipe ID not in cookbook")
+      }
+      }).catch((err) => {
+          dispatch({ type: 'DELETE_RECIPE_BY_ID_FROM_COOKBOOK_ERROR', err });
+    })
+  }
+}
+
+
 export const editCookbook = (cookbook) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    // make async call to database
-    console.log("STATE", cookbook);
-
     // make async call to database
     const firestore = getFirestore();
     firestore
@@ -110,11 +193,30 @@ export const deleteCookbook = (id, cookbook) => {
         dispatch({ type: 'DELETE_COOKBOOK_ERROR', err });
       });
 
+
+    const cookbookBlurb = {
+      cookbookId: id,
+      cookbookTitle: cookbook.cookbookTitle,
+      cookbookAttribution: cookbook.cookbookAttribution
+    }
+    console.log(cookbookBlurb)
     // remove cookbook from user
+    const authorId = getState().firebase.auth.uid;
+    firestore
+      .collection('users')
+      .doc(authorId)
+      .update({
+        recipes: firestore.FieldValue.arrayRemove(cookbookBlurb)
+      })
 
     // remove cookbook frmo all recipe instances
     cookbook.recipes.forEach((recipe) => {
-
+      firestore
+        .collection("recipes")
+        .doc(recipe.recipeId)
+        .update({
+          cookbooks: firestore.FieldValue.arrayRemove(cookbookBlurb)
+        })
     })
 
   };

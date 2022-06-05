@@ -2,7 +2,14 @@ import React from 'react';
 import RecipeRow from './RecipeRow'
 
 const RecipeList = ({recipeList}) => {
+  if (recipeList && recipeList.length === 0){
     return (
+      <div className="row"> 
+        There are no recipes to be shown here
+      </div>
+    )
+  }
+  return (
         <div>
             <table>
               <thead>
@@ -14,8 +21,9 @@ const RecipeList = ({recipeList}) => {
               </thead>
               <tbody>
                 { recipeList && Object.keys(recipeList).map(recipeKey => {
+                  const id = recipeList[parseInt(recipeKey)].recipeId ? recipeList[parseInt(recipeKey)].recipeId : recipeList[parseInt(recipeKey)].id
                   return (
-                    <RecipeRow targetRecipe={recipeList[recipeKey]} id={isNaN(parseInt(recipeKey)) ? recipeKey : recipeList[recipeKey].id} key={recipeKey}/>
+                    <RecipeRow targetRecipe={recipeList[recipeKey]} id={id} key={id}/>
                   )
                 })}
               </tbody>

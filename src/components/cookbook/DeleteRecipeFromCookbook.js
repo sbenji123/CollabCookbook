@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { addRecipeToCookbookById } from '../../store/actions/cookbookActions';
+import { deleteRecipeFromCookbook } from '../../store/actions/cookbookActions';
 
 
-class AddRecipeToCookbook extends Component {
+class DeleteRecipeFromCookbook extends Component {
   state = {
     pressedOnce: false,
     recipeId: ""
@@ -12,8 +12,7 @@ class AddRecipeToCookbook extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.pressedOnce){
-      console.log(this.state)
-      this.props.addRecipeToCookbookById(this.props.id, this.state.recipeId)
+      this.props.deleteRecipeFromCookbook(this.props.id, this.state.recipeId)
     } else {
       this.setState({pressedOnce:true})
     }
@@ -33,7 +32,7 @@ class AddRecipeToCookbook extends Component {
     if (this.props.auth.uid != null && !this.state.pressedOnce){
     return (
       <button className="btn pink lighten-3 z-depth-1" onClick={this.handleSubmit}>
-        Add Existing Recipe
+        Remove Recipe By Id
       </button>
     )} else if (this.props.auth.uid != null && this.state.pressedOnce){
       return (
@@ -43,7 +42,7 @@ class AddRecipeToCookbook extends Component {
               <input type="text" id="recipeId" onChange={this.handleChange}/>
           </div>
         <div className="edit-buttons">
-          <button className=" btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Add</button>
+          <button className=" btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>Delete</button>
           <button className=" btn pink lighten-1 z-depth-0" onClick={this.handleCancel}>Cancel </button>
         </div>
       </div>
@@ -66,10 +65,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addRecipeToCookbookById: (cookbookId, recipeId) => dispatch(addRecipeToCookbookById(cookbookId, recipeId)),
+    deleteRecipeFromCookbook: (cookbookId, recipeId) => dispatch(deleteRecipeFromCookbook(cookbookId, recipeId)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddRecipeToCookbook);
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteRecipeFromCookbook);
 
 

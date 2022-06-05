@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { deleteCookbook } from '../../store/actions/cookbookActions';
+import { Navigate } from 'react-router-dom';
 
 class DeleteCookbook extends Component {
   state = {
-    pressedOnce: false
+    pressedOnce: false,
+    submitted: false
   }
 
   handleSubmit = (e) => {
     if (this.state.pressedOnce){
       this.props.deleteCookbook(this.props.id, this.props.cookbook)
+      this.setState({submitted: true})
     } else {
       this.setState({pressedOnce:true})
     }
@@ -18,9 +21,12 @@ class DeleteCookbook extends Component {
   render(){
     if (this.props.cookbook.authorId === this.props.auth.uid){
     return (
-      <button className='btn pink lighten-3 z-depth-1' onClick={this.handleSubmit}> 
-        {this.state.pressedOnce ? "Confirm" : "Remove"}
-      </button> 
+      <div>
+        {this.state.submitted ? <Navigate to={'/cookbooks/list'} /> : null}
+        <button className='btn pink lighten-3 z-depth-1' onClick={this.handleSubmit}> 
+          {this.state.pressedOnce ? "Confirm" : "Delete Cookbook"}
+        </button> 
+      </div>
     )} else {
       return null
     }
@@ -28,10 +34,7 @@ class DeleteCookbook extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { id } = ownProps.cookbook;
-  console.log(id)
   return {
-    id: id,
     auth: state.firebase.auth
   };
 };

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { navToRecipe } from '../../store/actions/recipeActions';
 import { Link } from 'react-router-dom';
-import DeleteRecipe from './DeleteRecipe';
 
 class RecipeRow extends Component {
   state = { ...this.props.targetRecipe };

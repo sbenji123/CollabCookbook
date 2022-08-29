@@ -193,10 +193,10 @@ export const deleteCookbook = (id, cookbook) => {
       .collection('users')
       .doc(authorId)
       .update({
-        recipes: firestore.FieldValue.arrayRemove(cookbookBlurb)
+        cookbooks: firestore.FieldValue.arrayRemove(cookbookBlurb)
       })
 
-    // remove cookbook frmo all recipe instances
+    // remove cookbook from all recipe instances
     cookbook.recipes.forEach((recipe) => {
       firestore
         .collection("recipes")

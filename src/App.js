@@ -13,6 +13,7 @@ import CreateCookbook from './components/cookbook/CreateCookbook';
 import ShowCookbookPage from './components/cookbook/ShowCookbookPage';
 import ShowCookbookEditPage from './components/cookbook/ShowCookbookEditPage';
 import ShowCreateRecipeInCookbook from './components/cookbook/ShowCreateRecipeInCookbook';
+import ForgotPassword from './components/auth/ForgotPassword';
 
 class App extends Component {
 
@@ -34,6 +35,7 @@ class App extends Component {
               <Route path="/cookbooks/list" element={<ShowCookbookList />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/" element={<Dashboard />} />
             </Routes>
           </div>

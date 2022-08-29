@@ -7,7 +7,8 @@ import { Navigate } from 'react-router-dom'
 class SignIn extends Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        forgotPass: false
     }
     handleChange = (e) => {
         this.setState({
@@ -16,12 +17,16 @@ class SignIn extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault(); //prevents default refresh of page
-        this.props.signIn(this.state)
+        this.props.signIn({email: this.state.email, password: this.state.password})
     }
+    handlePasswordReset = (e) => {
+      e.preventDefault(); //prevents default refresh of page
+      console.log("bingo")
+    }
+
     render() {
       const { authError, auth } = this.props
       if (auth.uid) return <Navigate to = '/' />
-
 
       return (
           <div className = "container">
@@ -40,8 +45,10 @@ class SignIn extends Component {
                       <div className="red-text center">
                       { authError ? <p>{authError}</p> : null}
                       </div>
+                      <a href="/forgotpassword"><u>I forgot my password</u></a>
                   </div>
               </form>
+ 
           </div>        )
     }
 }

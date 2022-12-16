@@ -16,72 +16,74 @@ export const createRecipe = (recipe, cookbookId) => {
     const directions = recipe.directions + '';
     recipe.directions = directions.split('\n');
     const ingredients = recipe.ingredients + '';
-    recipe.ingredients = ingredients.split('\n');
-    const profile = getState().firebase.profile;
-    const authorId = getState().firebase.auth.uid;
+    recipe.ingredients = ingredients.map(section => section.split('\n').filter(ingredient => ingredient !== ""));
+    console.log(recipe.ingredients)
+    
+    // const profile = getState().firebase.profile;
+    // const authorId = getState().firebase.auth.uid;
 
-    const newRecipe = {
-      ...recipe,
-      authorFirstName: profile.firstName,
-      authorLastName: profile.lastName,
-      authorId: authorId,
-      createdAt: new Date(),
-      cookbooks: cookbookId ? [cookbookId] : []
-    }
+    // const newRecipe = {
+    //   ...recipe,
+    //   authorFirstName: profile.firstName,
+    //   authorLastName: profile.lastName,
+    //   authorId: authorId,
+    //   createdAt: new Date(),
+    //   cookbooks: cookbookId ? [cookbookId] : []
+    // }
 
-    // add to recipe database
-    const firestore = getFirestore();
-    firestore
-      .collection('recipes')
-      .add(newRecipe)
-      .then(created_recipe => {
-        console.log("CREATE RECIPE")
-        dispatch({ type: 'CREATE_RECIPE', created_recipe });
-        return created_recipe
-      })
-      .then((created_recipe) => {
-        const recipeBlurb = {
-            recipeId: created_recipe.id,
-            recipeTitle: recipe.recipeTitle,
-            recipeAttribution: recipe.recipeAttribution
-        }
-        console.log(recipeBlurb)
-        // add new recipe to user's recipes
-        firestore
-          .collection('users')
-          .doc(authorId)
-          .update({
-            recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
-          })
-          .then(updated_user => {
-            dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER', updated_user });
-            return updated_user
-          })
-          .catch(err => {
-            dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER_ERROR', err });
-          });
+    // // add to recipe database
+    // const firestore = getFirestore();
+    // firestore
+    //   .collection('recipes')
+    //   .add(newRecipe)
+    //   .then(created_recipe => {
+    //     console.log("CREATE RECIPE")
+    //     dispatch({ type: 'CREATE_RECIPE', created_recipe });
+    //     return created_recipe
+    //   })
+    //   .then((created_recipe) => {
+    //     const recipeBlurb = {
+    //         recipeId: created_recipe.id,
+    //         recipeTitle: recipe.recipeTitle,
+    //         recipeAttribution: recipe.recipeAttribution
+    //     }
+    //     console.log(recipeBlurb)
+    //     // add new recipe to user's recipes
+    //     firestore
+    //       .collection('users')
+    //       .doc(authorId)
+    //       .update({
+    //         recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+    //       })
+    //       .then(updated_user => {
+    //         dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER', updated_user });
+    //         return updated_user
+    //       })
+    //       .catch(err => {
+    //         dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER_ERROR', err });
+    //       });
 
-        // add recipe to cookbook if there is one
-        if (cookbookId){
-          console.log("Cookbook here")
-          firestore
-            .collection('cookbooks')
-            .doc(cookbookId)
-            .update({
-              recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
-            })
-            .then(updated_cookbook => {
-              dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK', updated_cookbook });
-              return updated_cookbook
-            })
-            .catch(err => {
-              dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK_ERROR', err });
-            });
-        }
-      })
-      .catch(err => {
-        dispatch({ type: 'CREATE_RECIPE_ERROR', err });
-      });
+    //     // add recipe to cookbook if there is one
+    //     if (cookbookId){
+    //       console.log("Cookbook here")
+    //       firestore
+    //         .collection('cookbooks')
+    //         .doc(cookbookId)
+    //         .update({
+    //           recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+    //         })
+    //         .then(updated_cookbook => {
+    //           dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK', updated_cookbook });
+    //           return updated_cookbook
+    //         })
+    //         .catch(err => {
+    //           dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK_ERROR', err });
+    //         });
+    //     }
+    //   })
+    //   .catch(err => {
+    //     dispatch({ type: 'CREATE_RECIPE_ERROR', err });
+    //   });
   };
 };
 

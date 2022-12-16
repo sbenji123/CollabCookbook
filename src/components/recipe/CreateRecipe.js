@@ -12,18 +12,25 @@ class CreateRecipe extends Component {
           prepTime:'',
           totalTime:'',
           servingSize:'',
-          ingredients:'',
+          ingredients: [""],
           directions:'',
           recipeCategory: '',
           recipeAttribution: '',
         },
+        ingredientSections: 1,
         recipeError: null,
         submitSuccess: false
     }
 
     handleChange = (e) => {
       let newState = {...this.state}
-      newState.recipe[e.target.id] = e.target.value
+      let targetId = e.target.id
+      let ingrediantIndex = parseInt(targetId.substr(targetId.length-1,1))// gets the last char in the targetId is a num (meaning it is an index of ingredients)
+      if (!isNaN(ingrediantIndex)){ // if there is a last number
+        newState.recipe.ingredients[ingrediantIndex] = e.target.value
+      } else {
+        newState.recipe[e.target.id] = e.target.value
+      }
       this.setState({ ...newState })
     }
 
@@ -44,6 +51,62 @@ class CreateRecipe extends Component {
           })
         }     
     }
+
+    handleAddIngredientSection = () => {
+      console.log("Add section")
+      let newRecipe = {...this.state.recipe}
+      newRecipe.ingredients = [...newRecipe.ingredients, ""]
+      this.setState({
+        recipe: newRecipe,
+        ingredientSections: this.state.ingredientSections + 1
+      })
+    }
+
+    handleSubtractIngredientSection = () => {
+      console.log("Remove Section")
+      let newRecipe = {...this.state.recipe}
+      let oldIngredients = this.state.recipe.ingredients
+      newRecipe.ingredients = oldIngredients.slice(0, oldIngredients.length - 1)
+      newRecipe.ingredients[oldIngredients.length - 2]+="\n"+oldIngredients[oldIngredients.length - 1]
+      console.log(newRecipe.ingredients)
+      this.setState({
+        recipe: newRecipe,
+        ingredientSections: this.state.ingredientSections - 1
+      })
+    }
+
+    ingredientSections = () => {
+        if (this.state.ingredientSections === 1){
+          return (
+            <div  className="input-field">
+              <label htmlFor="ingredient0">Ingredients</label>
+              <textarea id="ingredient0"  className="materialize-textarea" onChange={this.handleChange} value = {this.state.recipe.ingredients[0]}></textarea>
+            </div>)
+        } else {
+          return (
+          this.state.recipe.ingredients.map((ingredients, index) =>
+            <div className="input-field" key={index}>
+              <label htmlFor={"ingredient"+index}>Ingredients</label>
+              <textarea id={"ingredient"+index}  className="materialize-textarea" onChange={this.handleChange} value = {ingredients}></textarea>
+            </div>
+        ))}
+    }
+    
+
+    ingredientForm = () => {
+      return (
+        <div>
+          {this.ingredientSections()}
+          <div className="row">
+            {(this.state.ingredientSections > 1) ? <button className="col btn-small pink" onClick={this.handleSubtractIngredientSection}><i className="material-icons">exposure_neg_1</i></button> : null }
+            <div className="col center"><p>Ingredient Section</p></div>
+            <button className="col btn-small pink" onClick={this.handleAddIngredientSection}><i className="material-icons">exposure_plus_1</i></button>
+          </div>
+        </div>
+   
+      )
+    }
+
     render() {
       const { auth } = this.props;
       if (!auth.uid) return <Navigate to = '/signin' />
@@ -85,10 +148,7 @@ class CreateRecipe extends Component {
                       <label htmlFor="servingSize">Serving Size</label>
                       <input type="text" id="servingSize" onChange={this.handleChange}/>
                   </div>
-                  <div className="input-field">
-                      <label htmlFor="ingredients">Ingredients</label>
-                      <textarea id="ingredients"  className="materialize-textarea" onChange={this.handleChange}></textarea>
-                  </div>
+                  {this.ingredientForm()}
                   <div className="input-field">
                       <label htmlFor="directions">Directions</label>
                       <textarea id="directions"  className="materialize-textarea" onChange={this.handleChange}></textarea>

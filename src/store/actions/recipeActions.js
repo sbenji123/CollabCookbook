@@ -11,79 +11,85 @@ export const navToRecipe = (recipe) => {
 
 export const createRecipe = (recipe, cookbookId) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    console.log("bingo")
+    console.log("Create Recipe")
     // format string to arrays
     const directions = recipe.directions + '';
     recipe.directions = directions.split('\n');
-    const ingredients = recipe.ingredients + '';
-    recipe.ingredients = ingredients.map(section => section.split('\n').filter(ingredient => ingredient !== ""));
-    console.log(recipe.ingredients)
+    const ingredients = recipe.ingredients
+    let ingredients_with_section_titles = ingredients.map(section => section.split('\n').filter(ingredient => ingredient !== ""));
+    recipe.ingredient_section_order = ingredients_with_section_titles.map(section => section.length > 0 ? section[0] : "Empty")
+    recipe.ingredients = ingredients_with_section_titles.reduce((map, section) => {
+      map[section[0]] = section.slice(1)
+      return map
+    }, {})
     
-    // const profile = getState().firebase.profile;
-    // const authorId = getState().firebase.auth.uid;
+    const profile = getState().firebase.profile;
+    const authorId = getState().firebase.auth.uid;
 
-    // const newRecipe = {
-    //   ...recipe,
-    //   authorFirstName: profile.firstName,
-    //   authorLastName: profile.lastName,
-    //   authorId: authorId,
-    //   createdAt: new Date(),
-    //   cookbooks: cookbookId ? [cookbookId] : []
-    // }
+    const newRecipe = {
+      ...recipe,
+      authorFirstName: profile.firstName,
+      authorLastName: profile.lastName,
+      authorId: authorId,
+      createdAt: new Date(),
+      cookbooks: cookbookId ? [cookbookId] : []
+    }
 
-    // // add to recipe database
-    // const firestore = getFirestore();
-    // firestore
-    //   .collection('recipes')
-    //   .add(newRecipe)
-    //   .then(created_recipe => {
-    //     console.log("CREATE RECIPE")
-    //     dispatch({ type: 'CREATE_RECIPE', created_recipe });
-    //     return created_recipe
-    //   })
-    //   .then((created_recipe) => {
-    //     const recipeBlurb = {
-    //         recipeId: created_recipe.id,
-    //         recipeTitle: recipe.recipeTitle,
-    //         recipeAttribution: recipe.recipeAttribution
-    //     }
-    //     console.log(recipeBlurb)
-    //     // add new recipe to user's recipes
-    //     firestore
-    //       .collection('users')
-    //       .doc(authorId)
-    //       .update({
-    //         recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
-    //       })
-    //       .then(updated_user => {
-    //         dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER', updated_user });
-    //         return updated_user
-    //       })
-    //       .catch(err => {
-    //         dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER_ERROR', err });
-    //       });
+    console.log(newRecipe)
 
-    //     // add recipe to cookbook if there is one
-    //     if (cookbookId){
-    //       console.log("Cookbook here")
-    //       firestore
-    //         .collection('cookbooks')
-    //         .doc(cookbookId)
-    //         .update({
-    //           recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
-    //         })
-    //         .then(updated_cookbook => {
-    //           dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK', updated_cookbook });
-    //           return updated_cookbook
-    //         })
-    //         .catch(err => {
-    //           dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK_ERROR', err });
-    //         });
-    //     }
-    //   })
-    //   .catch(err => {
-    //     dispatch({ type: 'CREATE_RECIPE_ERROR', err });
-    //   });
+    // add to recipe database
+    const firestore = getFirestore();
+    firestore
+      .collection('recipes')
+      .add(newRecipe)
+      .then(created_recipe => {
+        console.log("CREATE RECIPE")
+        dispatch({ type: 'CREATE_RECIPE', created_recipe });
+        return created_recipe
+      })
+      .then((created_recipe) => {
+        const recipeBlurb = {
+            recipeId: created_recipe.id,
+            recipeTitle: recipe.recipeTitle,
+            recipeAttribution: recipe.recipeAttribution
+        }
+        console.log(recipeBlurb)
+        // add new recipe to user's recipes
+        firestore
+          .collection('users')
+          .doc(authorId)
+          .update({
+            recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+          })
+          .then(updated_user => {
+            dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER', updated_user });
+            return updated_user
+          })
+          .catch(err => {
+            dispatch({ type: 'ADD_CREATED_RECIPE_TO_USER_ERROR', err });
+          });
+
+        // add recipe to cookbook if there is one
+        if (cookbookId){
+          console.log("Cookbook here")
+          firestore
+            .collection('cookbooks')
+            .doc(cookbookId)
+            .update({
+              recipes: firestore.FieldValue.arrayUnion(recipeBlurb)
+            })
+            .then(updated_cookbook => {
+              dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK', updated_cookbook });
+              return updated_cookbook
+            })
+            .catch(err => {
+              dispatch({ type: 'ADD_CREATED_RECIPE_TO_COOKBOOK_ERROR', err });
+            });
+        }
+      })
+      .catch(err => {
+        dispatch({ type: 'CREATE_RECIPE_ERROR', err });
+      });
   };
 };
 
@@ -92,9 +98,7 @@ const changedTitle = (oldRecipe, newRecipe) => {
 }
 
 const changedAttribution = (oldRecipe, newRecipe) => {
-  console.log(oldRecipe, newRecipe)
   return oldRecipe.recipeAttribution !== newRecipe.recipeAttribution
-
 }
 
 export const editRecipe = (oldRecipe, newRecipe) => {
@@ -105,8 +109,13 @@ export const editRecipe = (oldRecipe, newRecipe) => {
     // format string to arrays
     const directions = newRecipe.directions + '';
     newRecipe.directions = directions.split('\n');
-    const ingredients = newRecipe.ingredients + '';
-    newRecipe.ingredients = ingredients.split('\n');
+
+    let ingredients_with_section_titles = newRecipe.ingredients.map(section => section.split('\n').filter(ingredient => ingredient !== ""));
+    newRecipe.ingredient_section_order = ingredients_with_section_titles.map(section => section.length > 0 ? section[0] : "Empty")
+    newRecipe.ingredients = ingredients_with_section_titles.reduce((map, section) => {
+      map[section[0]] = section.slice(1)
+      return map
+    }, {})
 
     // edit in recipe database
     const firestore = getFirestore();

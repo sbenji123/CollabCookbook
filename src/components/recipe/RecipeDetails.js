@@ -8,14 +8,14 @@ import { compose } from 'redux';
 import DeleteRecipe from './DeleteRecipe';
 
 const RecipeDetails = (props) => {
-
+  console.log("SHOW RECIPE:", props.recipe)
   const { auth, recipe, id } = props;
   if (recipe) {
     return (
       <div className='container white recipe-details'>
         {displayHeading(recipe)}
         {quantitativeRecipeDetails(recipe)}
-        <IngredientList ingredients={recipe.ingredients} />
+        <IngredientList order={recipe.ingredient_section_order} ingredients={recipe.ingredients} />
         <DirectionList directions={recipe.directions} />
         {editButtons(auth, recipe, id)}
         <div className="card-action grey lighten-4 grey-text">

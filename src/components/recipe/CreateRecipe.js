@@ -94,8 +94,12 @@ class CreateRecipe extends Component {
     
 
     ingredientForm = () => {
+      if (!Array.isArray(this.state.recipe.ingredients)){
+        return <div></div>
+      }
       return (
         <div>
+          {this.state.ingredientSections > 1 ? <div>First line of ingredients list will be section name</div>: null}
           {this.ingredientSections()}
           <div className="row">
             {(this.state.ingredientSections > 1) ? <button className="col btn-small pink" onClick={this.handleSubtractIngredientSection}><i className="material-icons">exposure_neg_1</i></button> : null }
@@ -103,7 +107,6 @@ class CreateRecipe extends Component {
             <button className="col btn-small pink" onClick={this.handleAddIngredientSection}><i className="material-icons">exposure_plus_1</i></button>
           </div>
         </div>
-   
       )
     }
 

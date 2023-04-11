@@ -40,6 +40,12 @@ img {
   max-width: 100%;
 }
 
+ul > li {
+  font-size: 1rem;
+  margin-left: 2rem;
+  list-style-type: circle !important;
+}
+
 .recipe-details{
   margin: 24px auto 0 auto;
   padding: 10px;

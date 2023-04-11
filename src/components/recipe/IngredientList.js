@@ -1,23 +1,25 @@
 import React from 'react'
+import Section from "../organizer/Section"
 
-const IngredientList = ({ingredients}) => {
-  const liStyle = {
-    fontSize: "1rem",
-    marginLeft: "2rem",
-    listStyleType: "circle",
-  }
-    return (
-        <div >
-            <span>
-              <h5>Ingredients</h5>
-            </span>       
+
+const IngredientList = ({order, ingredients}) => {
+  console.log(order, ingredients)
+  return (
+      <div >
+          <span>
+            <h5>Ingredients</h5>
+          </span>
+          {(order == null) ?  // condition to take care of old way to do ingredients
             <ul>
-                { ingredients.map((ingredient, index) => {
-                    return(<li style={liStyle} key={index}> {ingredient} </li>)
-                })}
+              { ingredients.map((ingredient, index) => {
+                  return(<li key={index}> {ingredient} </li>)
+              })}
             </ul>
-        </div>
-    )
+           : 
+           <Section order={order} list={ingredients}></Section> 
+          }
+      </div>
+  )
 }
 
 export default IngredientList
